@@ -504,15 +504,23 @@ Open to Work ✓`}
               {projects.map(project => (
 
                   <article
-                      className="project"
+                      className={`project ${[1, 2, 3].includes(project.id) ? 'project-featured' : ''}`}
                       key={project.id}
                   >
 
                     <div className="project-top">
 
-                  <span>
-                    {project.category}
-                  </span>
+                      <div className="project-meta">
+                        <span>
+                          {project.category}
+                        </span>
+
+                        {[1, 2, 3].includes(project.id) && (
+                            <strong className="featured-badge">
+                              Projeto em destaque
+                            </strong>
+                        )}
+                      </div>
 
                       <a
                           href={project.githubUrl}
@@ -557,6 +565,18 @@ Open to Work ✓`}
 
                       ))}
 
+                    </div>
+
+                    <div className="project-actions">
+                      <a
+                          className="project-link"
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                      >
+                        <Github size={16} />
+                        Ver código
+                      </a>
                     </div>
 
                   </article>
