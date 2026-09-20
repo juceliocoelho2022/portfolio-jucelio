@@ -411,15 +411,67 @@ pre {
 
 .project {
   padding: 20px;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.project:hover {
+  transform: translateY(-3px);
+  border-color: rgba(122, 156, 255, 0.32);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.22);
+}
+
+.project-featured {
+  border-color: rgba(89, 221, 182, 0.28);
+  background:
+    linear-gradient(
+      150deg,
+      rgba(17, 39, 48, 0.98),
+      rgba(10, 22, 31, 0.98)
+    );
+}
+
+.project-featured::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: linear-gradient(var(--green), var(--blue));
 }
 
 .project-top {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  gap: 12px;
   color: var(--green);
   font-size: 0.76rem;
   font-weight: 800;
+}
+
+.project-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.featured-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 4px 8px;
+  border: 1px solid rgba(89, 221, 182, 0.25);
+  border-radius: 999px;
+  background: rgba(89, 221, 182, 0.08);
+  color: var(--green);
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .project-top a {
@@ -454,6 +506,29 @@ pre {
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
+}
+
+.project-actions {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-size: 0.84rem;
+  font-weight: 700;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.project-link:hover {
+  color: var(--green);
+  transform: translateX(2px);
 }
 
 .education {
