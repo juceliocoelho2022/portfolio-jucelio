@@ -785,7 +785,9 @@ footer {
 
 
 .project-cover {
-  height: 190px;
+  width: calc(100% + 40px);
+  aspect-ratio: 16 / 9;
+  height: auto;
   margin: -20px -20px 16px;
   overflow: hidden;
   border-bottom: 1px solid var(--line);
@@ -796,7 +798,8 @@ footer {
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
 }
 
 .project-featured .project-cover {
@@ -805,7 +808,8 @@ footer {
 
 @media (max-width: 560px) {
   .project-cover {
-    height: 170px;
+    width: calc(100% + 34px);
+    height: auto;
     margin: -17px -17px 14px;
   }
 }
