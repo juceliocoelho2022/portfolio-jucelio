@@ -119,7 +119,37 @@ class PortfolioControllerTest {
         mockMvc.perform(post("/api/contact")
                         .contentType("application/json")
                         .content(body))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType("application/problem+json"))
+                .andExpect(jsonPath("$.title").value("Erro de validação"))
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.detail").value("Um ou mais campos enviados são inválidos."))
+                .andExpect(jsonPath("$.errors.name").value("Nome é obrigatório"))
+                .andExpect(jsonPath("$.errors.email").value("E-mail inválido"))
+                .andExpect(jsonPath("$.errors.message").value("A mensagem deve ter entre 10 e 2000 caracteres"));
+    }
+
+    @Test
+    void shouldReturnProblemDetailWhenResumeGenerationFails() throws Exception {
+        when(resumePdfService.generateResume())
+                .thenThrow(new IllegalStateException("Falha ao gerar PDF"));
+
+        mockMvc.perform(get("/api/resume"))
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().contentType("application/problem+json"))
+                .andExpect(jsonPath("$.title").value("Erro interno"))
+                .andExpect(jsonPath("$.status").value(500))
+                .andExpect(jsonPath("$.detail").value("Ocorreu um erro interno inesperado."));
+    }
+
+    @Test
+    void shouldReturnProblemDetailForUnknownResource() throws Exception {
+        mockMvc.perform(get("/api/nao-existe"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType("application/problem+json"))
+                .andExpect(jsonPath("$.title").value("Recurso não encontrado"))
+                .andExpect(jsonPath("$.status").value(404))
+                .andExpect(jsonPath("$.detail").value("O recurso solicitado não foi encontrado."));
     }
 
     @Test
@@ -140,7 +170,10 @@ class PortfolioControllerTest {
                         .contentType("application/json")
                         .content(body))
                 .andExpect(status().isServiceUnavailable())
-                .andExpect(jsonPath("$.message")
-                        .value("Não foi possível enviar o e-mail agora. Verifique a configuração do serviço de e-mail."));
+                .andExpect(content().contentType("application/problem+json"))
+                .andExpect(jsonPath("$.title").value("Serviço de contato indisponível"))
+                .andExpect(jsonPath("$.status").value(503))
+                .andExpect(jsonPath("$.detail")
+                        .value("Não foi possível enviar o e-mail agora. Tente novamente em instantes."));
     }
 }
