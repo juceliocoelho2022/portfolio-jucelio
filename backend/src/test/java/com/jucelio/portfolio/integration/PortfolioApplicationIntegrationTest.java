@@ -57,6 +57,19 @@ class PortfolioApplicationIntegrationTest {
     }
 
     @Test
+    void shouldExposeActuatorHealth() throws Exception {
+        mockMvc.perform(get("/actuator/health"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("UP"));
+    }
+
+    @Test
+    void shouldExposePrometheusMetrics() throws Exception {
+        mockMvc.perform(get("/actuator/prometheus"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
     void shouldExposeOpenApiSpecification() throws Exception {
         mockMvc.perform(get("/v3/api-docs"))
                 .andExpect(status().isOk())
