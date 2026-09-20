@@ -39,6 +39,15 @@ jobs:
       - name: Test and verify backend
         run: mvn --batch-mode --no-transfer-progress clean verify
 
+      - name: Upload JaCoCo report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: backend/target/site/jacoco/
+          if-no-files-found: warn
+          retention-days: 14
+
       - name: Build backend Docker image
         run: docker build -t portfolio-jucelio-api:ci .
 
