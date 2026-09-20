@@ -24,5 +24,9 @@ public record ContactRequest(
         )
         @NotBlank(message = "Mensagem é obrigatória")
         @Size(min = 10, max = 2000, message = "A mensagem deve ter entre 10 e 2000 caracteres")
-        String message
+        String message,
+
+        @Schema(hidden = true)
+        @Size(max = 0, message = "Requisição inválida")
+        String website
 ) {}
