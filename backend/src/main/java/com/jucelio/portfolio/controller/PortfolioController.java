@@ -3,7 +3,10 @@ package com.jucelio.portfolio.controller;
 import com.jucelio.portfolio.dto.ContactRequest;
 import com.jucelio.portfolio.model.Project;
 import com.jucelio.portfolio.service.PortfolioService;
+import com.jucelio.portfolio.service.ResumePdfService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,9 +20,11 @@ import java.util.Map;
 public class PortfolioController {
 
     private final PortfolioService portfolioService;
+    private final ResumePdfService resumePdfService;
 
-    public PortfolioController(PortfolioService portfolioService) {
+    public PortfolioController(PortfolioService portfolioService, ResumePdfService resumePdfService) {
         this.portfolioService = portfolioService;
+        this.resumePdfService = resumePdfService;
     }
 
     @GetMapping("/health")
@@ -34,6 +39,17 @@ public class PortfolioController {
     @GetMapping("/projects")
     public List<Project> projects() {
         return portfolioService.getProjects();
+    }
+
+    @GetMapping(value = "/resume", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> resume() {
+        byte[] pdf = resumePdfService.generateResume();
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=Curriculo_Jucelio_Coelho_Desenvolvedor_Java.pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdf);
     }
 
     @PostMapping("/contact")
