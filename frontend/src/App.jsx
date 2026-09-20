@@ -100,7 +100,7 @@ function App() {
       const data = await response.json()
 
       if (!response.ok) {
-        setFeedback('Não foi possível enviar. Confira os campos e tente novamente.')
+        setFeedback(data.message || 'Não foi possível enviar a mensagem.')
         return
       }
 
