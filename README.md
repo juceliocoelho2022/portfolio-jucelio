@@ -1,252 +1,327 @@
-# Jucelio Coelho — Portfólio Full Stack
+<div align="center">
 
-![CI](https://github.com/juceliocoelho2022/portfolio-jucelio/actions/workflows/ci.yml/badge.svg)
+# Jucelio Coelho — Portfolio Full Stack
 
-Portfólio profissional desenvolvido com **React + Java 21 + Spring Boot**, com foco em demonstrar competências em **backend, APIs REST, microsserviços, mensageria, dados, testes, observabilidade e cloud**.
+### Java Backend • Spring Boot • APIs REST • Kafka • PostgreSQL • React
 
-> Projeto publicado com frontend no Vercel e backend no Render.
+Portfólio profissional com foco em **engenharia backend, arquitetura, dados, qualidade de software e deploy em produção**.
 
-## Destaques
+[![CI](https://github.com/juceliocoelho2022/portfolio-jucelio/actions/workflows/ci.yml/badge.svg)](https://github.com/juceliocoelho2022/portfolio-jucelio/actions)
+![Java](https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.5.5-6DB33F?logo=springboot&logoColor=white)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=111)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Production-4169E1?logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)
 
-- Java 21 + Spring Boot 3.5.5
-- React 19 + Vite
-- API REST integrada ao frontend
-- Projetos carregados dinamicamente pelo backend
-- Formulário de contato com envio real de e-mail via SMTP
-- Download de currículo gerado pelo backend
+[**Ver portfólio**](https://portfolio-jucelio-o7jm.vercel.app) •
+[**API**](https://portfolio-jucelio-api.onrender.com/api/health) •
+[**LinkedIn**](https://www.linkedin.com/in/jucelio-desenvolvedor-sistema) •
+[**GitHub**](https://github.com/juceliocoelho2022)
+
+</div>
+
+---
+
+## Visão geral
+
+Este projeto foi construído para demonstrar, em uma aplicação real publicada, competências de **Desenvolvedor Java Backend**.
+
+O frontend é desenvolvido em React e consome uma API Spring Boot responsável pelos projetos, currículo e contato. Os projetos são persistidos em PostgreSQL com JPA/Hibernate e versionamento de banco com Flyway.
+
+### Em produção
+
+| Camada | Tecnologia | Hospedagem |
+|---|---|---|
+| Frontend | React 19 + Vite | Vercel |
+| Backend | Java 21 + Spring Boot 3.5.5 | Render |
+| Banco | PostgreSQL | Render |
+| CI | GitHub Actions | GitHub |
+| Container | Docker | Render |
+
+---
+
+## Principais recursos
+
+- API REST com Java 21 e Spring Boot
+- Persistência com Spring Data JPA + Hibernate
+- PostgreSQL em produção
+- Migrations com Flyway
+- Frontend React integrado à API
+- Currículo PDF gerado pelo backend
+- Formulário de contato com envio por SMTP
 - Bean Validation
-- CORS configurado para frontend Vercel
-- Layout responsivo com menu hambúrguer
-- Deploy automatizado a partir da branch `main`
+- CORS configurado
+- Docker
+- GitHub Actions
+- Testes automatizados com JUnit 5 e MockMvc
+- JaCoCo para cobertura de testes
+- Layout responsivo
+- Deploy contínuo
 
-## Stack
+---
+
+## Stack técnica
 
 ### Backend
 
-- Java 21
-- Spring Boot 3.5.5
-- Spring Web
-- Spring Data JPA
-- Hibernate
-- PostgreSQL
-- Flyway
-- Bean Validation
-- Spring Mail
-- Apache PDFBox
-- Maven
-- API REST
+```text
+Java 21
+Spring Boot 3.5.5
+Spring Web
+Spring Data JPA
+Hibernate
+Flyway
+PostgreSQL
+Bean Validation
+Spring Mail
+Apache PDFBox
+Maven
+JUnit 5
+Mockito
+MockMvc
+JaCoCo
+```
 
 ### Frontend
 
-- React 19
-- Vite
-- Lucide React
-- CSS responsivo
-- Fetch API
-
-### Infraestrutura
-
-- Git / GitHub
-- Render
-- Vercel
-- Docker
-- Variáveis de ambiente
-
-## Arquitetura
-
 ```text
-Usuário
-  |
-  v
-React + Vite
-Vercel
-  |
-  | HTTPS / JSON
-  v
-Spring Boot REST API
-Render
-  |
-  +-- PortfolioController
-  |
-  +-- PortfolioService
-  |     |
-  |     +-- Projetos do portfólio
-  |
-  +-- ContactMailService
-  |     |
-  |     +-- Gmail SMTP
-  |
-  +-- ResumePdfService
-        |
-        +-- PDFBox
+React 19
+Vite
+Lucide React
+Fetch API
+CSS responsivo
 ```
 
-### Arquitetura NexaPay
+### Infraestrutura e DevOps
 
-O portfólio também apresenta uma visão visual da arquitetura do NexaPay:
+```text
+Git
+GitHub
+GitHub Actions
+Docker
+Render
+Vercel
+PostgreSQL
+Variáveis de ambiente
+```
+
+---
+
+## Arquitetura do portfólio
+
+```text
+                    ┌──────────────────────┐
+                    │       Usuário        │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │   React + Vite       │
+                    │      Vercel          │
+                    └──────────┬───────────┘
+                               │ HTTPS / JSON
+                               ▼
+                    ┌──────────────────────┐
+                    │ Spring Boot REST API │
+                    │       Render         │
+                    └──────────┬───────────┘
+                               │
+              ┌────────────────┼────────────────┐
+              │                │                │
+              ▼                ▼                ▼
+      PortfolioService   ContactMailService  ResumePdfService
+              │                │                │
+              ▼                ▼                ▼
+        PostgreSQL         Gmail SMTP          PDFBox
+        JPA/Flyway
+```
+
+---
+
+## Projetos em destaque
+
+| Projeto | Foco | Tecnologias |
+|---|---|---|
+| **NexaPay** | Pagamentos event-driven | Java 21, Spring Boot, Kafka, PostgreSQL, Redis |
+| **InnovationHub** | Gestão corporativa de PD&I | Java 21, Spring Boot, JPA, Flyway, OpenAPI |
+| **SentinelFraud Platform** | Prevenção a fraudes | Spring Boot, Kafka, Redis, PostgreSQL |
+| **TenantGuard Cloud** | SaaS multi-tenant | Spring Boot, PostgreSQL, RLS, JWT |
+| **FraudShield AI** | IA aplicada a fraude | Spring Boot, FastAPI, Python, PostgreSQL |
+| **RotaCerta** | Aplicativo mobile | Kotlin, Jetpack Compose, Android |
+
+Os cards no portfólio possuem links diretos para os repositórios correspondentes.
+
+---
+
+## Arquitetura em destaque — NexaPay
 
 ```text
 Cliente / Frontend
-        |
-        v
-    API Gateway
-        |
-        v
-  Payment Service
-        |
-        v
-      Kafka
-     /     \
-    v       v
+        │
+        ▼
+   API Gateway
+        │
+        ▼
+ Payment Service
+        │
+        ▼
+  Apache Kafka
+     ┌──┴──┐
+     ▼     ▼
 PostgreSQL Redis
-        |
-        v
-Prometheus / Grafana / Loki / Tempo
+     │
+     ▼
+Prometheus • Grafana • Loki • Tempo
 ```
 
-A seção destaca princípios como **event-driven**, **idempotência**, **resiliência**, **retry/DLT** e **observabilidade distribuída**.
+### Conceitos aplicados
 
-### Persistência com PostgreSQL
+`Event-Driven` • `Idempotência` • `Retry` • `DLT` • `Resiliência` • `Logs` • `Métricas` • `Tracing`
 
-Os projetos do portfólio deixaram de ficar hardcoded no serviço Java e agora são carregados por **Spring Data JPA**.
+---
 
-A estrutura usa:
+## Persistência
 
-- `ProjectEntity` para mapeamento ORM;
-- `ProjectRepository` com Spring Data JPA;
-- PostgreSQL em produção;
-- Flyway para versionamento do schema;
-- migration inicial com os projetos e seus relacionamentos;
-- tabelas separadas para tecnologias e destaques.
+Os projetos não ficam hardcoded no serviço Java.
 
-Em ambiente local ou quando as variáveis de banco ainda não estiverem configuradas, a aplicação usa H2 em memória como fallback seguro. Em produção, configure PostgreSQL pelas variáveis de ambiente.
-
-## Funcionalidades
-
-### Projetos
-
-O frontend consulta a API Java e renderiza os projetos profissionais dinamicamente.
-
-Projetos atualmente destacados:
-
-- NexaPay — Event-Driven Payments
-- InnovationHub
-- SentinelFraud Platform
-- TenantGuard Cloud
-- FraudShield AI
-- RotaCerta
-
-Os projetos possuem links para seus respectivos repositórios GitHub quando disponíveis.
-
-### Formulário de contato
-
-O visitante pode enviar uma mensagem diretamente pelo portfólio.
-
-Fluxo:
+A API utiliza:
 
 ```text
-Formulário React
-      |
-      v
-POST /api/contact
-      |
-      v
-Bean Validation
-      |
-      v
-ContactMailService
-      |
-      v
-Gmail SMTP
-      |
-      v
-E-mail do proprietário do portfólio
+ProjectEntity
+     │
+     ▼
+ProjectRepository
+     │
+     ▼
+Spring Data JPA
+     │
+     ▼
+Hibernate
+     │
+     ▼
+PostgreSQL
 ```
 
-O backend utiliza `Reply-To` com o e-mail informado pelo visitante para facilitar a resposta.
+O Flyway cria e versiona:
 
-### Download de currículo
-
-O portfólio disponibiliza:
-
-```http
-GET /api/resume
+```text
+projects
+project_technologies
+project_highlights
 ```
 
-O currículo é gerado dinamicamente pelo backend em formato PDF usando Apache PDFBox.
+Para desenvolvimento e testes, o projeto também possui suporte a H2 em memória.
 
-## Endpoints
+---
+
+## Qualidade e testes
+
+A API possui testes automatizados com **JUnit 5, Mockito e MockMvc**.
+
+Cenários cobertos incluem:
+
+- health check;
+- consulta de projetos;
+- download do currículo;
+- envio de contato;
+- validação de payload inválido;
+- tratamento de indisponibilidade do serviço de e-mail;
+- inicialização do contexto com banco de testes;
+- execução das migrations Flyway.
+
+O JaCoCo é executado durante:
+
+```bash
+mvn clean verify
+```
+
+---
+
+## CI com GitHub Actions
+
+A pipeline é executada em cada `push` e `pull request` para `main`.
+
+```text
+Push / Pull Request
+        │
+        ├── Backend
+        │    ├── Java 21
+        │    ├── Maven Verify
+        │    ├── JUnit / MockMvc
+        │    ├── JaCoCo
+        │    └── Docker Build
+        │
+        └── Frontend
+             ├── Node.js
+             ├── npm ci
+             └── Vite Build
+```
+
+Workflow:
+
+```text
+.github/workflows/ci.yml
+```
+
+---
+
+## API
 
 | Método | Endpoint | Descrição |
 |---|---|---|
-| GET | `/api/health` | Health check da aplicação |
-| GET | `/api/projects` | Lista os projetos |
-| GET | `/api/resume` | Gera e baixa o currículo em PDF |
-| POST | `/api/contact` | Valida e envia mensagem de contato |
+| `GET` | `/api/health` | Health check |
+| `GET` | `/api/projects` | Lista projetos |
+| `GET` | `/api/resume` | Gera currículo em PDF |
+| `POST` | `/api/contact` | Envia mensagem de contato |
+
+### Health check
+
+```http
+GET https://portfolio-jucelio-api.onrender.com/api/health
+```
+
+---
 
 ## Executando localmente
 
 ### Backend
 
-Entre na pasta:
-
 ```bash
 cd backend
-```
-
-Execute:
-
-```bash
 mvn spring-boot:run
 ```
 
-O backend ficará disponível em:
+API:
 
 ```text
 http://localhost:8080
 ```
 
-Teste:
-
-```text
-http://localhost:8080/api/health
-```
-
 ### Frontend
-
-Entre na pasta:
 
 ```bash
 cd frontend
-```
-
-Instale as dependências:
-
-```bash
 npm install
-```
-
-Execute:
-
-```bash
 npm run dev
 ```
 
-A aplicação ficará disponível em:
+Aplicação:
 
 ```text
 http://localhost:5173
 ```
 
+---
+
 ## Variáveis de ambiente
 
-### Frontend — Vercel
+### Frontend
 
 ```env
 VITE_API_URL=https://portfolio-jucelio-api.onrender.com/api
 ```
 
-### Backend — Render
+### Backend
 
 ```env
 DATABASE_URL=jdbc:postgresql://host:5432/database
@@ -262,125 +337,66 @@ CONTACT_TO_EMAIL=seu-email@gmail.com
 CONTACT_FROM_EMAIL=seu-email@gmail.com
 ```
 
-> Nunca versione senhas, tokens ou credenciais reais no GitHub. Use sempre os Secrets / Environment Variables da plataforma.
+> Credenciais reais nunca devem ser versionadas. Em produção, são configuradas como Environment Variables.
 
-## Segurança do formulário
+---
 
-O backend já aplica:
-
-- validação de nome obrigatório;
-- validação de e-mail;
-- mensagem obrigatória;
-- tamanho da mensagem entre 10 e 2000 caracteres;
-- credenciais SMTP fora do código-fonte;
-- configuração CORS;
-- tratamento de falha no envio de e-mail.
-
-## Estrutura
+## Estrutura principal
 
 ```text
 portfolio-jucelio/
+│
 ├── backend/
 │   ├── Dockerfile
 │   ├── pom.xml
-│   └── src/main/
-│       ├── java/com/jucelio/portfolio/
-│       │   ├── config/
-│       │   │   └── CorsConfig.java
-│       │   ├── controller/
-│       │   │   └── PortfolioController.java
-│       │   ├── dto/
-│       │   │   └── ContactRequest.java
-│       │   ├── model/
-│       │   │   └── Project.java
-│       │   └── service/
-│       │       ├── ContactMailService.java
-│       │       ├── PortfolioService.java
-│       │       └── ResumePdfService.java
-│       └── resources/
-│           └── application.properties
+│   └── src/
+│       ├── main/
+│       │   ├── java/com/jucelio/portfolio/
+│       │   │   ├── config/
+│       │   │   ├── controller/
+│       │   │   ├── dto/
+│       │   │   ├── model/
+│       │   │   ├── persistence/
+│       │   │   └── service/
+│       │   └── resources/
+│       │       └── db/migration/
+│       └── test/
 │
 ├── frontend/
-│   ├── package.json
-│   ├── vite.config.js
+│   ├── public/projects/
 │   └── src/
 │       ├── App.jsx
 │       ├── main.jsx
 │       └── styles.css
 │
-└── README.md
+└── .github/
+    └── workflows/
+        └── ci.yml
 ```
 
-## Integração Contínua
-
-O repositório possui uma pipeline de **GitHub Actions** executada em cada `push` e `pull request` para a branch `main`.
-
-A pipeline valida:
-
-- backend com Java 21;
-- `mvn clean verify`;
-- build da imagem Docker do backend;
-- frontend com Node.js 22;
-- `npm ci`;
-- `npm run build`.
-
-Arquivo:
-
-```text
-.github/workflows/ci.yml
-```
-
-## Deploy
-
-### Backend
-
-Render:
-
-```text
-https://portfolio-jucelio-api.onrender.com
-```
-
-### Frontend
-
-Vercel:
-
-```text
-https://portfolio-jucelio-o7jm.vercel.app
-```
-
-## Perfil profissional
-
-**Jucelio Farias Coelho**
-
-Desenvolvedor com foco em:
-
-- Java Backend
-- Spring Boot
-- APIs REST
-- Microsserviços
-- Kafka
-- PostgreSQL
-- Redis
-- Docker
-- Testes automatizados
-- Observabilidade
-- Engenharia de Dados
-- AWS / Azure
-
-GitHub: https://github.com/juceliocoelho2022
-
-LinkedIn: https://www.linkedin.com/in/jucelio-desenvolvedor-sistema
+---
 
 ## Próximas evoluções
 
 - Painel administrativo
 - CRUD de projetos
-- Proteção anti-spam / rate limiting no formulário
-- Testes automatizados do fluxo de contato
-- GitHub Actions para CI
+- Rate limiting no formulário
+- Observabilidade do backend
 - Domínio próprio
-- Métricas e observabilidade do backend
+- Testes de integração com PostgreSQL via Testcontainers
 
 ---
 
-Desenvolvido por **Jucelio Farias Coelho** com **React, Java 21 e Spring Boot**.
+<div align="center">
+
+### Jucelio Farias Coelho
+
+**Java Backend Developer • Spring Boot • APIs • Kafka • PostgreSQL**
+
+[LinkedIn](https://www.linkedin.com/in/jucelio-desenvolvedor-sistema) •
+[GitHub](https://github.com/juceliocoelho2022) •
+[Portfólio](https://portfolio-jucelio-o7jm.vercel.app)
+
+Desenvolvido com **Java 21, Spring Boot e React**.
+
+</div>
