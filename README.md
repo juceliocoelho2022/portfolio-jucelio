@@ -14,7 +14,7 @@ Portfólio profissional com foco em **engenharia backend, arquitetura, dados, qu
 ![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)
 
 [**Ver portfólio**](https://portfolio-jucelio-o7jm.vercel.app) •
-[**API**](https://portfolio-jucelio-api.onrender.com/api/health) •
+[**API**](https://portfolio-jucelio-api.onrender.com/api/v1/health) •
 [**LinkedIn**](https://www.linkedin.com/in/jucelio-desenvolvedor-sistema) •
 [**GitHub**](https://github.com/juceliocoelho2022)
 
@@ -317,15 +317,26 @@ A documentação é gerada automaticamente pelo **springdoc-openapi**, com metad
 
 | Método | Endpoint | Descrição |
 |---|---|---|
-| `GET` | `/api/health` | Health check |
-| `GET` | `/api/projects` | Lista projetos |
-| `GET` | `/api/resume` | Gera currículo em PDF |
-| `POST` | `/api/contact` | Envia mensagem de contato |
+| `GET` | `/api/v1/health` | Health check |
+| `GET` | `/api/v1/projects` | Lista projetos |
+| `GET` | `/api/v1/resume` | Gera currículo em PDF |
+| `POST` | `/api/v1/contact` | Envia mensagem de contato |
+
+### Versionamento da API
+
+A versão atual da API é `v1` e todos os novos consumidores devem utilizar `/api/v1`.
+
+As rotas antigas em `/api` continuam funcionando temporariamente por uma camada de compatibilidade marcada como deprecated e oculta do Swagger, evitando quebra do frontend durante a migração.
+
+```text
+/api/v1  → contrato atual
+/api     → compatibilidade legada temporária
+```
 
 ### Health check
 
 ```http
-GET https://portfolio-jucelio-api.onrender.com/api/health
+GET https://portfolio-jucelio-api.onrender.com/api/v1/health
 ```
 
 ---
@@ -430,7 +441,6 @@ portfolio-jucelio/
 - CRUD de projetos
 - Rate limiting no formulário
 - Observabilidade do backend
-- Versionamento formal da API
 - Rate limiting e proteção anti-spam
 - Domínio próprio
 - Painel de cobertura de testes publicado pela CI
