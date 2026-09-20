@@ -1,5 +1,16 @@
 import { useEffect, useState } from 'react'
-import { Github, Linkedin, ExternalLink, Server, Database, TestTube2, Cloud, Send } from 'lucide-react'
+import {
+  Github,
+  Linkedin,
+  ExternalLink,
+  Server,
+  Database,
+  TestTube2,
+  Cloud,
+  Send,
+  Menu,
+  X
+} from 'lucide-react'
 
 const API_URL =
     import.meta.env.VITE_API_URL || 'http://localhost:8080/api'
@@ -7,30 +18,79 @@ const API_URL =
 function App() {
   const [projects, setProjects] = useState([])
   const [status, setStatus] = useState('Carregando projetos...')
-  const [contact, setContact] = useState({ name: '', email: '', message: '' })
+  const [contact, setContact] = useState({
+    name: '',
+    email: '',
+    message: ''
+  })
   const [feedback, setFeedback] = useState('')
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     fetch(`${API_URL}/projects`)
-      .then(res => {
-        if (!res.ok) throw new Error('Erro ao carregar projetos')
-        return res.json()
-      })
-      .then(data => {
-        setProjects(data)
-        setStatus('')
-      })
-      .catch(() => setStatus('API Java indisponível. Inicie o backend Spring Boot na porta 8080.'))
+        .then(res => {
+          if (!res.ok) {
+            throw new Error('Erro ao carregar projetos')
+          }
+
+          return res.json()
+        })
+        .then(data => {
+          setProjects(data)
+          setStatus('')
+        })
+        .catch(() => {
+          setStatus(
+              'Não foi possível carregar os projetos. Verifique a API Java.'
+          )
+        })
   }, [])
+
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth > 768) {
+        setMenuOpen(false)
+      }
+    }
+
+    function handleEscape(event) {
+      if (event.key === 'Escape') {
+        setMenuOpen(false)
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+    window.addEventListener('keydown', handleEscape)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('keydown', handleEscape)
+    }
+  }, [])
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [menuOpen])
+
+  function closeMenu() {
+    setMenuOpen(false)
+  }
 
   async function handleSubmit(e) {
     e.preventDefault()
+
     setFeedback('Enviando...')
 
     try {
       const response = await fetch(`${API_URL}/contact`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify(contact)
       })
 
@@ -42,57 +102,195 @@ function App() {
       }
 
       setFeedback(data.message)
-      setContact({ name: '', email: '', message: '' })
+
+      setContact({
+        name: '',
+        email: '',
+        message: ''
+      })
     } catch {
-      setFeedback('Não foi possível enviar. Verifique se o backend está rodando.')
+      setFeedback(
+          'Não foi possível enviar a mensagem. Verifique se o backend está disponível.'
+      )
     }
   }
 
   return (
-    <div className="page">
-      <header className="header">
-        <div className="container nav">
-          <a className="logo" href="#inicio">JFC<span>.</span></a>
-          <nav>
-            <a href="#sobre">Sobre</a>
-            <a href="#stack">Stack</a>
-            <a href="#projetos">Projetos</a>
-            <a href="#contato">Contato</a>
-          </nav>
-        </div>
-      </header>
+      <div className="page">
 
-      <main>
-        <section className="hero container" id="inicio">
-          <div>
-            <span className="eyebrow">JAVA BACKEND • DADOS • QA</span>
-            <h1>
-              Backend robusto.
-              <br />
-              Dados confiáveis.
-              <br />
-              <span>Software com qualidade.</span>
-            </h1>
-            <p>
-              Sou <strong>Jucelio Farias Coelho</strong>, profissional de tecnologia com foco
-              em Java 21, Spring Boot, APIs REST, microsserviços, bancos de dados,
-              engenharia de dados, testes automatizados e cloud.
-            </p>
+        <header className="header">
 
-            <div className="actions">
-              <a className="btn primary" href="#projetos">Ver projetos</a>
-              <a className="btn" href="https://github.com/juceliocoelho2022" target="_blank">
-                <Github size={18} /> GitHub
+          <div className="container nav">
+
+            <a
+                className="logo"
+                href="#inicio"
+                onClick={closeMenu}
+            >
+              JFC<span>.</span>
+            </a>
+
+            <button
+                className="menu-button"
+                type="button"
+                aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
+                aria-expanded={menuOpen}
+                aria-controls="main-navigation"
+                onClick={() => setMenuOpen(prev => !prev)}
+            >
+              {menuOpen
+                  ? <X size={26} />
+                  : <Menu size={26} />
+              }
+            </button>
+
+            <nav
+                id="main-navigation"
+                className={`nav-links ${menuOpen ? 'open' : ''}`}
+            >
+
+              <a
+                  href="#sobre"
+                  onClick={closeMenu}
+              >
+                Sobre
               </a>
-              <a className="btn" href="https://www.linkedin.com/in/jucelio-desenvolvedor-sistema" target="_blank">
-                <Linkedin size={18} /> LinkedIn
+
+              <a
+                  href="#stack"
+                  onClick={closeMenu}
+              >
+                Stack
               </a>
-            </div>
+
+              <a
+                  href="#projetos"
+                  onClick={closeMenu}
+              >
+                Projetos
+              </a>
+
+              <a
+                  href="#formacao"
+                  onClick={closeMenu}
+              >
+                Formação
+              </a>
+
+              <a
+                  href="#contato"
+                  onClick={closeMenu}
+              >
+                Contato
+              </a>
+
+            </nav>
+
           </div>
 
-          <div className="code-card">
-            <div className="dots"><i></i><i></i><i></i></div>
-            <pre>{`$ java --version
+        </header>
+
+        {menuOpen && (
+            <button
+                className="menu-backdrop"
+                type="button"
+                aria-label="Fechar menu"
+                onClick={closeMenu}
+            />
+        )}
+
+        <main>
+
+          <section
+              className="hero container"
+              id="inicio"
+          >
+
+            <div className="hero-copy">
+
+            <span className="eyebrow">
+              JAVA BACKEND • DADOS • QA
+            </span>
+
+              <h1>
+
+                Backend robusto.
+
+                <br />
+
+                Dados confiáveis.
+
+                <br />
+
+                <span>
+                Software com qualidade.
+              </span>
+
+              </h1>
+
+              <p>
+
+                Sou <strong>Jucelio Farias Coelho</strong>,
+                profissional de tecnologia com foco em Java 21,
+                Spring Boot, APIs REST, microsserviços,
+                bancos de dados, engenharia de dados,
+                testes automatizados e cloud.
+
+              </p>
+
+              <div className="actions">
+
+                <a
+                    className="btn primary"
+                    href="#projetos"
+                >
+                  Ver projetos
+                </a>
+
+                <a
+                    className="btn"
+                    href="https://github.com/juceliocoelho2022"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+
+                  <Github size={18} />
+
+                  GitHub
+
+                </a>
+
+                <a
+                    className="btn"
+                    href="https://www.linkedin.com/in/jucelio-desenvolvedor-sistema"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+
+                  <Linkedin size={18} />
+
+                  LinkedIn
+
+                </a>
+
+              </div>
+
+            </div>
+
+            <div className="code-card">
+
+              <div className="dots">
+
+                <i></i>
+
+                <i></i>
+
+                <i></i>
+
+              </div>
+
+              <pre>
+{`$ java --version
 openjdk 21
 
 $ stack --backend
@@ -110,144 +308,427 @@ MockMvc
 JaCoCo
 
 $ status
-Open to Work ✓`}</pre>
-          </div>
-        </section>
+Open to Work ✓`}
+            </pre>
 
-        <section className="section container" id="sobre">
-          <div className="section-title">
-            <span>01. SOBRE</span>
-            <h2>Perfil técnico orientado a backend, dados e qualidade.</h2>
-          </div>
+            </div>
 
-          <div className="feature-grid">
-            <Feature icon={<Server />} title="Backend" text="Java 21, Spring Boot, APIs REST, JPA, Hibernate, Kafka e microsserviços." />
-            <Feature icon={<Database />} title="Dados" text="PostgreSQL, Oracle, SQL Server, Python, Spark, Databricks e Airflow." />
-            <Feature icon={<TestTube2 />} title="Qualidade" text="JUnit 5, Mockito, MockMvc, JaCoCo e testes de integração." />
-            <Feature icon={<Cloud />} title="Cloud & DevOps" text="Docker, GitHub Actions, AWS, Azure e observabilidade." />
-          </div>
-        </section>
+          </section>
 
-        <section className="section alt" id="stack">
-          <div className="container">
+          <section
+              className="section container"
+              id="sobre"
+          >
+
             <div className="section-title">
-              <span>02. STACK</span>
-              <h2>Tecnologias que fazem parte do meu ecossistema.</h2>
+
+            <span>
+              01. SOBRE
+            </span>
+
+              <h2>
+                Perfil técnico orientado a backend,
+                dados e qualidade.
+              </h2>
+
             </div>
 
-            <div className="stack-wrap">
-              {[
-                'Java 21','Spring Boot','Spring Data JPA','Hibernate','Kafka',
-                'PostgreSQL','Oracle','SQL Server','Redis','Docker','Git',
-                'JUnit 5','Mockito','MockMvc','JaCoCo','Prometheus','Grafana',
-                'Python','pandas','Spark','Databricks','Airflow','AWS','Azure'
-              ].map(item => <span key={item}>{item}</span>)}
+            <div className="feature-grid">
+
+              <Feature
+                  icon={<Server />}
+                  title="Backend"
+                  text="Java 21, Spring Boot, APIs REST, JPA, Hibernate, Kafka e microsserviços."
+              />
+
+              <Feature
+                  icon={<Database />}
+                  title="Dados"
+                  text="PostgreSQL, Oracle, SQL Server, Python, Spark, Databricks e Airflow."
+              />
+
+              <Feature
+                  icon={<TestTube2 />}
+                  title="Qualidade"
+                  text="JUnit 5, Mockito, MockMvc, JaCoCo e testes de integração."
+              />
+
+              <Feature
+                  icon={<Cloud />}
+                  title="Cloud & DevOps"
+                  text="Docker, GitHub Actions, AWS, Azure e observabilidade."
+              />
+
             </div>
-          </div>
-        </section>
 
-        <section className="section container" id="projetos">
-          <div className="section-title">
-            <span>03. PROJETOS</span>
-            <h2>Projetos carregados pela API Java.</h2>
-          </div>
+          </section>
 
-          {status && <div className="status">{status}</div>}
+          <section
+              className="section alt"
+              id="stack"
+          >
 
-          <div className="projects">
-            {projects.map(project => (
-              <article className="project" key={project.id}>
-                <div className="project-top">
-                  <span>{project.category}</span>
-                  <a href={project.githubUrl} target="_blank" aria-label="Abrir GitHub">
-                    <ExternalLink size={18} />
-                  </a>
-                </div>
-                <h3>{project.name}</h3>
-                <p>{project.description}</p>
+            <div className="container">
 
-                <div className="highlight-list">
-                  {project.highlights.map(item => <small key={item}>✓ {item}</small>)}
-                </div>
+              <div className="section-title">
 
-                <div className="tech-list">
-                  {project.technologies.map(tech => <span key={tech}>{tech}</span>)}
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
+              <span>
+                02. STACK
+              </span>
 
-        <section className="section alt">
-          <div className="container">
+                <h2>
+                  Tecnologias que fazem parte do meu ecossistema.
+                </h2>
+
+              </div>
+
+              <div className="stack-wrap">
+
+                {[
+                  'Java 21',
+                  'Spring Boot',
+                  'Spring Data JPA',
+                  'Hibernate',
+                  'Kafka',
+                  'PostgreSQL',
+                  'Oracle',
+                  'SQL Server',
+                  'Redis',
+                  'Docker',
+                  'Git',
+                  'JUnit 5',
+                  'Mockito',
+                  'MockMvc',
+                  'JaCoCo',
+                  'Prometheus',
+                  'Grafana',
+                  'Python',
+                  'pandas',
+                  'Spark',
+                  'Databricks',
+                  'Airflow',
+                  'AWS',
+                  'Azure'
+                ].map(item => (
+
+                    <span key={item}>
+                  {item}
+                </span>
+
+                ))}
+
+              </div>
+
+            </div>
+
+          </section>
+
+          <section
+              className="section container"
+              id="projetos"
+          >
+
             <div className="section-title">
-              <span>04. FORMAÇÃO</span>
-              <h2>Formação alinhada a software e dados.</h2>
+
+            <span>
+              03. PROJETOS
+            </span>
+
+              <h2>
+                Projetos carregados pela API Java.
+              </h2>
+
             </div>
 
-            <div className="education">
-              <div><strong>Análise e Desenvolvimento de Sistemas</strong><span>Graduação</span></div>
-              <div><strong>Ciência de Dados e Big Data Analytics</strong><span>Pós-graduação</span></div>
-              <div><strong>Arquitetura e Governança de Dados</strong><span>Pós-graduação</span></div>
-              <div><strong>Análise de Dados e Inteligência Artificial</strong><span>Pós-graduação</span></div>
+            {status && (
+
+                <div className="status">
+                  {status}
+                </div>
+
+            )}
+
+            <div className="projects">
+
+              {projects.map(project => (
+
+                  <article
+                      className="project"
+                      key={project.id}
+                  >
+
+                    <div className="project-top">
+
+                  <span>
+                    {project.category}
+                  </span>
+
+                      <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`Abrir ${project.name} no GitHub`}
+                      >
+
+                        <ExternalLink size={18} />
+
+                      </a>
+
+                    </div>
+
+                    <h3>
+                      {project.name}
+                    </h3>
+
+                    <p>
+                      {project.description}
+                    </p>
+
+                    <div className="highlight-list">
+
+                      {project.highlights.map(item => (
+
+                          <small key={item}>
+                            ✓ {item}
+                          </small>
+
+                      ))}
+
+                    </div>
+
+                    <div className="tech-list">
+
+                      {project.technologies.map(tech => (
+
+                          <span key={tech}>
+                      {tech}
+                    </span>
+
+                      ))}
+
+                    </div>
+
+                  </article>
+
+              ))}
+
             </div>
+
+          </section>
+
+          <section
+              className="section alt"
+              id="formacao"
+          >
+
+            <div className="container">
+
+              <div className="section-title">
+
+              <span>
+                04. FORMAÇÃO
+              </span>
+
+                <h2>
+                  Formação alinhada a software e dados.
+                </h2>
+
+              </div>
+
+              <div className="education">
+
+                <div>
+
+                  <strong>
+                    Análise e Desenvolvimento de Sistemas
+                  </strong>
+
+                  <span>
+                  Graduação
+                </span>
+
+                </div>
+
+                <div>
+
+                  <strong>
+                    Ciência de Dados e Big Data Analytics
+                  </strong>
+
+                  <span>
+                  Pós-graduação
+                </span>
+
+                </div>
+
+                <div>
+
+                  <strong>
+                    Arquitetura e Governança de Dados
+                  </strong>
+
+                  <span>
+                  Pós-graduação
+                </span>
+
+                </div>
+
+                <div>
+
+                  <strong>
+                    Análise de Dados e Inteligência Artificial
+                  </strong>
+
+                  <span>
+                  Pós-graduação
+                </span>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </section>
+
+          <section
+              className="section container"
+              id="contato"
+          >
+
+            <div className="contact-grid">
+
+              <div>
+
+              <span className="eyebrow">
+                CONTATO
+              </span>
+
+                <h2>
+                  Vamos conversar sobre oportunidades e projetos.
+                </h2>
+
+                <p>
+                  O formulário abaixo envia os dados
+                  para um endpoint REST no backend Java.
+                </p>
+
+              </div>
+
+              <form
+                  className="contact-form"
+                  onSubmit={handleSubmit}
+              >
+
+                <input
+                    required
+                    placeholder="Seu nome"
+                    value={contact.name}
+                    onChange={e =>
+                        setContact({
+                          ...contact,
+                          name: e.target.value
+                        })
+                    }
+                />
+
+                <input
+                    required
+                    type="email"
+                    placeholder="Seu e-mail"
+                    value={contact.email}
+                    onChange={e =>
+                        setContact({
+                          ...contact,
+                          email: e.target.value
+                        })
+                    }
+                />
+
+                <textarea
+                    required
+                    rows="4"
+                    placeholder="Sua mensagem"
+                    value={contact.message}
+                    onChange={e =>
+                        setContact({
+                          ...contact,
+                          message: e.target.value
+                        })
+                    }
+                />
+
+                <button
+                    className="btn primary submit"
+                    type="submit"
+                >
+
+                  <Send size={18} />
+
+                  Enviar mensagem
+
+                </button>
+
+                {feedback && (
+
+                    <p className="feedback">
+                      {feedback}
+                    </p>
+
+                )}
+
+              </form>
+
+            </div>
+
+          </section>
+
+        </main>
+
+        <footer>
+
+          <div className="container footer-content">
+
+          <span>
+            © 2026 Jucelio Farias Coelho
+          </span>
+
+            <span>
+            React + Java 21 + Spring Boot
+          </span>
+
           </div>
-        </section>
 
-        <section className="section container" id="contato">
-          <div className="contact-grid">
-            <div>
-              <span className="eyebrow">CONTATO</span>
-              <h2>Vamos conversar sobre oportunidades e projetos.</h2>
-              <p>
-                O formulário abaixo envia os dados para um endpoint REST no backend Java.
-              </p>
-            </div>
+        </footer>
 
-            <form className="contact-form" onSubmit={handleSubmit}>
-              <input
-                placeholder="Seu nome"
-                value={contact.name}
-                onChange={e => setContact({ ...contact, name: e.target.value })}
-              />
-              <input
-                type="email"
-                placeholder="Seu e-mail"
-                value={contact.email}
-                onChange={e => setContact({ ...contact, email: e.target.value })}
-              />
-              <textarea
-                rows="5"
-                placeholder="Sua mensagem"
-                value={contact.message}
-                onChange={e => setContact({ ...contact, message: e.target.value })}
-              />
-              <button className="btn primary submit" type="submit">
-                <Send size={18} /> Enviar mensagem
-              </button>
-              {feedback && <p className="feedback">{feedback}</p>}
-            </form>
-          </div>
-        </section>
-      </main>
-
-      <footer>
-        <div className="container footer-content">
-          <span>© 2026 Jucelio Farias Coelho</span>
-          <span>React + Java 21 + Spring Boot</span>
-        </div>
-      </footer>
-    </div>
+      </div>
   )
 }
 
-function Feature({ icon, title, text }) {
+function Feature({
+                   icon,
+                   title,
+                   text
+                 }) {
+
   return (
-    <div className="feature">
-      <div className="icon">{icon}</div>
-      <h3>{title}</h3>
-      <p>{text}</p>
-    </div>
+
+      <div className="feature">
+
+        <div className="icon">
+          {icon}
+        </div>
+
+        <h3>
+          {title}
+        </h3>
+
+        <p>
+          {text}
+        </p>
+
+      </div>
+
   )
 }
 
