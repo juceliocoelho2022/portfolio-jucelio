@@ -185,6 +185,13 @@ function App() {
               </a>
 
               <a
+                  href="#arquitetura"
+                  onClick={closeMenu}
+              >
+                Arquitetura
+              </a>
+
+              <a
                   href="#formacao"
                   onClick={closeMenu}
               >
@@ -607,6 +614,94 @@ Open to Work ✓`}
 
           <section
               className="section alt"
+              id="arquitetura"
+          >
+            <div className="container">
+              <div className="section-title">
+                <span>
+                  04. ARQUITETURA
+                </span>
+
+                <h2>
+                  NexaPay — fluxo distribuído de pagamentos.
+                </h2>
+
+                <p>
+                  Uma visão resumida da arquitetura event-driven usada no projeto,
+                  destacando processamento, mensageria, persistência, cache e observabilidade.
+                </p>
+              </div>
+
+              <div className="architecture-flow">
+                <ArchitectureNode
+                    eyebrow="Entrada"
+                    title="Cliente / Frontend"
+                    text="Inicia operações e chamadas da API."
+                />
+
+                <div className="architecture-arrow">↓</div>
+
+                <ArchitectureNode
+                    eyebrow="Borda"
+                    title="API Gateway"
+                    text="Centraliza acesso, roteamento e autenticação."
+                />
+
+                <div className="architecture-arrow">↓</div>
+
+                <ArchitectureNode
+                    eyebrow="Core"
+                    title="Payment Service"
+                    text="Processa pagamentos, idempotência e regras de negócio."
+                    accent
+                />
+
+                <div className="architecture-arrow">↓</div>
+
+                <ArchitectureNode
+                    eyebrow="Mensageria"
+                    title="Apache Kafka"
+                    text="Eventos assíncronos, desacoplamento e DLT."
+                />
+
+                <div className="architecture-split">
+                  <ArchitectureNode
+                      eyebrow="Persistência"
+                      title="PostgreSQL"
+                      text="Dados transacionais e consistência."
+                  />
+
+                  <ArchitectureNode
+                      eyebrow="Performance"
+                      title="Redis"
+                      text="Cache e suporte à idempotência."
+                  />
+                </div>
+
+                <div className="architecture-arrow">↓</div>
+
+                <div className="architecture-observability">
+                  <strong>Observabilidade</strong>
+                  <span>Prometheus</span>
+                  <span>Grafana</span>
+                  <span>Loki</span>
+                  <span>Tempo</span>
+                </div>
+              </div>
+
+              <div className="architecture-note">
+                <strong>Princípios aplicados:</strong>
+                <span>Event-driven</span>
+                <span>Idempotência</span>
+                <span>Resiliência</span>
+                <span>Retry / DLT</span>
+                <span>Logs, métricas e traces</span>
+              </div>
+            </div>
+          </section>
+
+          <section
+              className="section alt"
               id="formacao"
           >
 
@@ -858,6 +953,21 @@ Open to Work ✓`}
 
         </footer>
 
+      </div>
+  )
+}
+
+function ArchitectureNode({
+                            eyebrow,
+                            title,
+                            text,
+                            accent = false
+                          }) {
+  return (
+      <div className={`architecture-node ${accent ? 'architecture-node-accent' : ''}`}>
+        <span>{eyebrow}</span>
+        <strong>{title}</strong>
+        <p>{text}</p>
       </div>
   )
 }
