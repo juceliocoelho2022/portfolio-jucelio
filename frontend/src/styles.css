@@ -809,3 +809,122 @@ footer {
     margin: -17px -17px 14px;
   }
 }
+
+
+.architecture-flow {
+  max-width: 880px;
+  margin: 0 auto;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+}
+
+.architecture-node {
+  width: min(100%, 560px);
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background:
+    linear-gradient(
+      150deg,
+      rgba(17, 32, 49, 0.96),
+      rgba(10, 20, 31, 0.96)
+    );
+  text-align: center;
+}
+
+.architecture-node > span {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--green);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.architecture-node strong {
+  display: block;
+  color: #fff;
+  font: 700 1.08rem 'Space Grotesk';
+}
+
+.architecture-node p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.architecture-node-accent {
+  border-color: rgba(89, 221, 182, 0.36);
+  box-shadow: 0 0 0 1px rgba(89, 221, 182, 0.05);
+}
+
+.architecture-arrow {
+  color: var(--blue);
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.architecture-split {
+  width: min(100%, 760px);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.architecture-observability {
+  width: min(100%, 760px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 17px;
+  border: 1px solid rgba(122, 156, 255, 0.22);
+  border-radius: 14px;
+  background: rgba(122, 156, 255, 0.05);
+}
+
+.architecture-observability strong {
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  font: 700 1rem 'Space Grotesk';
+}
+
+.architecture-observability span,
+.architecture-note span {
+  padding: 6px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.025);
+  color: #d4e2f0;
+  font-size: 0.76rem;
+}
+
+.architecture-note {
+  max-width: 880px;
+  margin: 20px auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.architecture-note strong {
+  color: var(--green);
+  font-size: 0.82rem;
+}
+
+@media (max-width: 640px) {
+  .architecture-split {
+    grid-template-columns: 1fr;
+  }
+
+  .architecture-node {
+    padding: 16px;
+  }
+}
