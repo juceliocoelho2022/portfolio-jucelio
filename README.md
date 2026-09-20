@@ -52,6 +52,8 @@ O frontend é desenvolvido em React e consome uma API Spring Boot responsável p
 - Currículo PDF gerado pelo backend
 - Formulário de contato com envio por SMTP
 - Bean Validation
+- Rate limiting no contato
+- Honeypot anti-spam no formulário
 - CORS configurado
 - Docker
 - GitHub Actions
@@ -226,6 +228,7 @@ Cenários cobertos:
 - `400` — erro de validação com mapa de campos inválidos;
 - `404` — recurso não encontrado;
 - `500` — erro interno inesperado;
+- `429` — limite de tentativas no formulário de contato;
 - `503` — serviço de contato indisponível.
 
 Exemplo:
@@ -257,6 +260,8 @@ Cenários cobertos incluem:
 - envio de contato;
 - validação de payload inválido;
 - tratamento de indisponibilidade do serviço de e-mail;
+- limite de requisições no contato;
+- bloqueio por honeypot anti-spam;
 - inicialização do contexto com banco de testes;
 - execução das migrations Flyway;
 - integração contra PostgreSQL real em container efêmero com Testcontainers.
@@ -394,6 +399,9 @@ MAIL_USERNAME=seu-email@gmail.com
 MAIL_PASSWORD=sua-senha-de-app
 CONTACT_TO_EMAIL=seu-email@gmail.com
 CONTACT_FROM_EMAIL=seu-email@gmail.com
+
+CONTACT_RATE_LIMIT_MAX_REQUESTS=5
+CONTACT_RATE_LIMIT_WINDOW_MINUTES=10
 ```
 
 > Credenciais reais nunca devem ser versionadas. Em produção, são configuradas como Environment Variables.
@@ -439,9 +447,7 @@ portfolio-jucelio/
 
 - Painel administrativo
 - CRUD de projetos
-- Rate limiting no formulário
 - Observabilidade do backend
-- Rate limiting e proteção anti-spam
 - Domínio próprio
 - Painel de cobertura de testes publicado pela CI
 
