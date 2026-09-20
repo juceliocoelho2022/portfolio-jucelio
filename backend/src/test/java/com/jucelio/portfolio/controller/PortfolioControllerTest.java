@@ -1,7 +1,9 @@
 package com.jucelio.portfolio.controller;
 
 import com.jucelio.portfolio.model.Project;
+import com.jucelio.portfolio.exception.RateLimitExceededException;
 import com.jucelio.portfolio.service.ContactMailService;
+import com.jucelio.portfolio.service.ContactRateLimitService;
 import com.jucelio.portfolio.service.PortfolioService;
 import com.jucelio.portfolio.service.ResumePdfService;
 import org.junit.jupiter.api.Test;
@@ -38,6 +40,9 @@ class PortfolioControllerTest {
 
     @MockitoBean
     private ContactMailService contactMailService;
+
+    @MockitoBean
+    private ContactRateLimitService contactRateLimitService;
 
     @Test
     void shouldKeepLegacyHealthEndpointWorking() throws Exception {
@@ -167,6 +172,50 @@ class PortfolioControllerTest {
                 .andExpect(jsonPath("$.title").value("Recurso não encontrado"))
                 .andExpect(jsonPath("$.status").value(404))
                 .andExpect(jsonPath("$.detail").value("O recurso solicitado não foi encontrado."));
+    }
+
+    @Test
+    void shouldReturnTooManyRequestsWhenRateLimitIsExceeded() throws Exception {
+        doThrow(new RateLimitExceededException(120))
+                .when(contactRateLimitService)
+                .check(any());
+
+        String body = """
+                {
+                  "name": "Recrutador",
+                  "email": "recrutador@example.com",
+                  "message": "Mensagem válida para testar o limite de requisições."
+                }
+                """;
+
+        mockMvc.perform(post("/api/v1/contact")
+                        .contentType("application/json")
+                        .content(body))
+                .andExpect(status().isTooManyRequests())
+                .andExpect(header().string("Retry-After", "120"))
+                .andExpect(content().contentType("application/problem+json"))
+                .andExpect(jsonPath("$.title").value("Limite de requisições excedido"))
+                .andExpect(jsonPath("$.status").value(429))
+                .andExpect(jsonPath("$.retryAfterSeconds").value(120));
+    }
+
+    @Test
+    void shouldRejectHoneypotPayload() throws Exception {
+        String body = """
+                {
+                  "name": "Bot",
+                  "email": "bot@example.com",
+                  "message": "Mensagem aparentemente válida para o formulário.",
+                  "website": "https://spam.example"
+                }
+                """;
+
+        mockMvc.perform(post("/api/v1/contact")
+                        .contentType("application/json")
+                        .content(body))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType("application/problem+json"))
+                .andExpect(jsonPath("$.errors.website").value("Requisição inválida"));
     }
 
     @Test
