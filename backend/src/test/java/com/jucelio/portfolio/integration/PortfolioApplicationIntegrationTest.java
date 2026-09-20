@@ -40,7 +40,7 @@ class PortfolioApplicationIntegrationTest {
 
     @Test
     void shouldExposeSeedProjectsThroughApi() throws Exception {
-        mockMvc.perform(get("/api/projects"))
+        mockMvc.perform(get("/api/v1/projects"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(6))
                 .andExpect(jsonPath("$[0].name").value("NexaPay"))
@@ -50,7 +50,7 @@ class PortfolioApplicationIntegrationTest {
 
     @Test
     void shouldExposeHealthEndpointWithApplicationRunning() throws Exception {
-        mockMvc.perform(get("/api/health"))
+        mockMvc.perform(get("/api/v1/health"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("UP"))
                 .andExpect(jsonPath("$.application").value("portfolio-api"));
@@ -62,7 +62,7 @@ class PortfolioApplicationIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.openapi").exists())
                 .andExpect(jsonPath("$.info.title").value("Portfolio Jucelio API"))
-                .andExpect(jsonPath("$.paths['/api/projects']").exists())
-                .andExpect(jsonPath("$.paths['/api/contact']").exists());
+                .andExpect(jsonPath("$.paths['/api/v1/projects']").exists())
+                .andExpect(jsonPath("$.paths['/api/v1/contact']").exists());
     }
 }
