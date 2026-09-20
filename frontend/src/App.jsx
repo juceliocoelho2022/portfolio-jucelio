@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Github, Linkedin, ExternalLink, Server, Database, TestTube2, Cloud, Send } from 'lucide-react'
 
-const API_URL = 'http://localhost:8080/api'
+const API_URL =
+    import.meta.env.VITE_API_URL || 'http://localhost:8080/api'
 
 function App() {
   const [projects, setProjects] = useState([])
