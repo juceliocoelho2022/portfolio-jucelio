@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#06101b"/><stop offset="1" stop-color="#121f3e"/></linearGradient><linearGradient id="s" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#28d7ff"/><stop offset=".55" stop-color="#7a9cff"/><stop offset="1" stop-color="#ff4fa3"/></linearGradient></defs>
+<rect width="1200" height="675" fill="url(#g)"/>
+<path d="M840 115 L1000 175 L970 395 Q925 500 840 550 Q755 500 710 395 L680 175 Z" fill="#0c1a2a" stroke="url(#s)" stroke-width="10"/>
+<circle cx="840" cy="320" r="90" fill="none" stroke="#28d7ff" stroke-width="8"/>
+<path d="M810 285 C760 250 745 340 795 360 C750 410 835 450 850 390 C875 440 960 400 905 350 C960 315 910 245 860 285 C850 245 815 250 810 285" fill="none" stroke="#7a9cff" stroke-width="8"/>
+<rect x="70" y="90" width="520" height="185" rx="28" fill="#0b1829" stroke="#29486b"/>
+<text x="105" y="162" fill="#edf5ff" font-size="58" font-family="Arial" font-weight="700">FraudShield AI</text>
+<text x="105" y="218" fill="#28d7ff" font-size="28" font-family="Arial">Análise de fraude com IA</text>
+<text x="75" y="545" fill="#9eb0c3" font-size="28" font-family="Arial">Spring Boot  •  FastAPI  •  Python  •  PostgreSQL  •  ML</text>
+</svg>
