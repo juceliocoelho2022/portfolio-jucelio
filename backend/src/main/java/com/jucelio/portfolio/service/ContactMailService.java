@@ -1,6 +1,7 @@
 package com.jucelio.portfolio.service;
 
 import com.jucelio.portfolio.dto.ContactRequest;
+import com.jucelio.portfolio.exception.ContactServiceUnavailableException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -26,7 +27,7 @@ public class ContactMailService {
 
     public void send(ContactRequest request) {
         if (!StringUtils.hasText(toEmail) || !StringUtils.hasText(fromEmail)) {
-            throw new IllegalStateException("Configuracao de e-mail incompleta no servidor.");
+            throw new ContactServiceUnavailableException("Configuração de e-mail incompleta no servidor.");
         }
 
         SimpleMailMessage message = new SimpleMailMessage();
