@@ -3,6 +3,7 @@ package com.jucelio.portfolio.controller;
 import com.jucelio.portfolio.dto.ContactRequest;
 import com.jucelio.portfolio.model.Project;
 import com.jucelio.portfolio.service.ContactMailService;
+import com.jucelio.portfolio.service.ContactRateLimitService;
 import com.jucelio.portfolio.service.PortfolioService;
 import com.jucelio.portfolio.service.ResumePdfService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -31,15 +33,18 @@ public class PortfolioController {
     private final PortfolioService portfolioService;
     private final ResumePdfService resumePdfService;
     private final ContactMailService contactMailService;
+    private final ContactRateLimitService contactRateLimitService;
 
     public PortfolioController(
             PortfolioService portfolioService,
             ResumePdfService resumePdfService,
-            ContactMailService contactMailService
+            ContactMailService contactMailService,
+            ContactRateLimitService contactRateLimitService
     ) {
         this.portfolioService = portfolioService;
         this.resumePdfService = resumePdfService;
         this.contactMailService = contactMailService;
+        this.contactRateLimitService = contactRateLimitService;
     }
 
     @Operation(summary = "Health check", description = "Retorna o status atual da API.")
@@ -139,6 +144,11 @@ public class PortfolioController {
                     )
             ),
             @ApiResponse(
+                    responseCode = "429",
+                    description = "Limite de requisições excedido",
+                    content = @Content(mediaType = "application/problem+json")
+            ),
+            @ApiResponse(
                     responseCode = "503",
                     description = "Serviço de e-mail indisponível",
                     content = @Content(
@@ -169,7 +179,9 @@ public class PortfolioController {
                                     """)
                     )
             )
-            @RequestBody ContactRequest request) {
+            @RequestBody ContactRequest request,
+            HttpServletRequest httpRequest) {
+        contactRateLimitService.check(httpRequest);
         contactMailService.send(request);
 
         return ResponseEntity.ok(Map.of(
