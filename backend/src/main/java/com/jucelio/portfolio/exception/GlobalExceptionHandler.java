@@ -63,6 +63,25 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(problem);
     }
 
+    @ExceptionHandler(RateLimitExceededException.class)
+    public ResponseEntity<ProblemDetail> handleRateLimit(
+            RateLimitExceededException ex,
+            HttpServletRequest request
+    ) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(
+                HttpStatus.TOO_MANY_REQUESTS,
+                "Muitas tentativas de contato. Aguarde antes de tentar novamente."
+        );
+        problem.setTitle("Limite de requisições excedido");
+        problem.setType(URI.create(PROBLEM_BASE + "rate-limit"));
+        problem.setInstance(URI.create(request.getRequestURI()));
+        problem.setProperty("retryAfterSeconds", ex.getRetryAfterSeconds());
+
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
+                .header("Retry-After", String.valueOf(ex.getRetryAfterSeconds()))
+                .body(problem);
+    }
+
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<ProblemDetail> handleNotFound(
             NoResourceFoundException ex,
