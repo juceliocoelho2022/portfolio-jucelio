@@ -2,6 +2,7 @@ package com.jucelio.portfolio.controller;
 
 import com.jucelio.portfolio.dto.ContactRequest;
 import com.jucelio.portfolio.model.Project;
+import com.jucelio.portfolio.service.ContactMailService;
 import com.jucelio.portfolio.service.PortfolioService;
 import com.jucelio.portfolio.service.ResumePdfService;
 import jakarta.validation.Valid;
@@ -21,10 +22,16 @@ public class PortfolioController {
 
     private final PortfolioService portfolioService;
     private final ResumePdfService resumePdfService;
+    private final ContactMailService contactMailService;
 
-    public PortfolioController(PortfolioService portfolioService, ResumePdfService resumePdfService) {
+    public PortfolioController(
+            PortfolioService portfolioService,
+            ResumePdfService resumePdfService,
+            ContactMailService contactMailService
+    ) {
         this.portfolioService = portfolioService;
         this.resumePdfService = resumePdfService;
+        this.contactMailService = contactMailService;
     }
 
     @GetMapping("/health")
@@ -54,8 +61,10 @@ public class PortfolioController {
 
     @PostMapping("/contact")
     public ResponseEntity<Map<String, String>> contact(@Valid @RequestBody ContactRequest request) {
+        contactMailService.send(request);
+
         return ResponseEntity.ok(Map.of(
-                "message", "Mensagem recebida com sucesso.",
+                "message", "Mensagem enviada com sucesso. Obrigado pelo contato!",
                 "name", request.name()
         ));
     }
