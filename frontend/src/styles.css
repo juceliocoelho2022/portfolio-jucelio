@@ -782,3 +782,30 @@ footer {
     padding: 42px 0;
   }
 }
+
+
+.project-cover {
+  height: 190px;
+  margin: -20px -20px 16px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background: #0b1622;
+}
+
+.project-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.project-featured .project-cover {
+  border-bottom-color: rgba(89, 221, 182, 0.24);
+}
+
+@media (max-width: 560px) {
+  .project-cover {
+    height: 170px;
+    margin: -17px -17px 14px;
+  }
+}
