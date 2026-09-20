@@ -44,6 +44,7 @@ O frontend é desenvolvido em React e consome uma API Spring Boot responsável p
 
 - API REST com Java 21 e Spring Boot
 - OpenAPI 3 + Swagger UI
+- Erros padronizados com ProblemDetail + @RestControllerAdvice
 - Persistência com Spring Data JPA + Hibernate
 - PostgreSQL em produção
 - Migrations com Flyway
@@ -213,6 +214,34 @@ project_highlights
 ```
 
 Para desenvolvimento e testes, o projeto também possui suporte a H2 em memória.
+
+---
+
+## Tratamento de erros
+
+A API padroniza falhas usando **ProblemDetail** com `@RestControllerAdvice`, mantendo respostas consistentes no formato `application/problem+json`.
+
+Cenários cobertos:
+
+- `400` — erro de validação com mapa de campos inválidos;
+- `404` — recurso não encontrado;
+- `500` — erro interno inesperado;
+- `503` — serviço de contato indisponível.
+
+Exemplo:
+
+```json
+{
+  "type": "https://portfolio-jucelio-api.onrender.com/problems/validation",
+  "title": "Erro de validação",
+  "status": 400,
+  "detail": "Um ou mais campos enviados são inválidos.",
+  "instance": "/api/contact",
+  "errors": {
+    "email": "E-mail inválido"
+  }
+}
+```
 
 ---
 
@@ -402,6 +431,7 @@ portfolio-jucelio/
 - Rate limiting no formulário
 - Observabilidade do backend
 - Versionamento formal da API
+- Rate limiting e proteção anti-spam
 - Domínio próprio
 - Painel de cobertura de testes publicado pela CI
 
