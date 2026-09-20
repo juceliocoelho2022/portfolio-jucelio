@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0b1118"/><stop offset="1" stop-color="#26131c"/></linearGradient><linearGradient id="r" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff5a7a"/><stop offset="1" stop-color="#ffb14d"/></linearGradient></defs>
+<rect width="1200" height="675" fill="url(#g)"/>
+<path d="M860 120 L1020 180 L990 390 Q940 500 860 545 Q780 500 730 390 L700 180 Z" fill="#101a24" stroke="url(#r)" stroke-width="8"/>
+<path d="M805 335 L845 375 L930 285" fill="none" stroke="#59ddb6" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="75" y="85" width="540" height="180" rx="28" fill="#141b23" stroke="#55303b"/>
+<text x="110" y="155" fill="#edf5ff" font-size="54" font-family="Arial" font-weight="700">SentinelFraud</text>
+<text x="110" y="210" fill="#ff6b86" font-size="28" font-family="Arial">Fraud Detection Platform</text>
+<text x="75" y="545" fill="#9eb0c3" font-size="28" font-family="Arial">Java  •  Spring Boot  •  Kafka  •  Redis  •  PostgreSQL</text>
+</svg>
