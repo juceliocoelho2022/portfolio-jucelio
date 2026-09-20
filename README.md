@@ -43,6 +43,7 @@ O frontend é desenvolvido em React e consome uma API Spring Boot responsável p
 ## Principais recursos
 
 - API REST com Java 21 e Spring Boot
+- OpenAPI 3 + Swagger UI
 - Persistência com Spring Data JPA + Hibernate
 - PostgreSQL em produção
 - Migrations com Flyway
@@ -68,6 +69,7 @@ O frontend é desenvolvido em React e consome uma API Spring Boot responsável p
 Java 21
 Spring Boot 3.5.5
 Spring Web
+OpenAPI 3 / Swagger UI
 Spring Data JPA
 Hibernate
 Flyway
@@ -268,6 +270,22 @@ Workflow:
 
 ## API
 
+### Documentação interativa
+
+Swagger UI:
+
+```text
+https://portfolio-jucelio-api.onrender.com/swagger-ui.html
+```
+
+OpenAPI JSON:
+
+```text
+https://portfolio-jucelio-api.onrender.com/v3/api-docs
+```
+
+A documentação é gerada automaticamente pelo **springdoc-openapi**, com metadados e descrições dos endpoints.
+
 | Método | Endpoint | Descrição |
 |---|---|---|
 | `GET` | `/api/health` | Health check |
@@ -383,6 +401,7 @@ portfolio-jucelio/
 - CRUD de projetos
 - Rate limiting no formulário
 - Observabilidade do backend
+- Versionamento formal da API
 - Domínio próprio
 - Painel de cobertura de testes publicado pela CI
 
