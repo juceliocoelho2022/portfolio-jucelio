@@ -6,6 +6,9 @@ import com.jucelio.portfolio.service.ContactMailService;
 import com.jucelio.portfolio.service.PortfolioService;
 import com.jucelio.portfolio.service.ResumePdfService;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.mail.MailException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +22,8 @@ import java.util.Map;
 @RequestMapping("/api")
 @CrossOrigin(originPatterns = {"http://localhost:5173", "https://*.vercel.app"})
 public class PortfolioController {
+
+    private static final Logger log = LoggerFactory.getLogger(PortfolioController.class);
 
     private final PortfolioService portfolioService;
     private final ResumePdfService resumePdfService;
@@ -61,11 +66,19 @@ public class PortfolioController {
 
     @PostMapping("/contact")
     public ResponseEntity<Map<String, String>> contact(@Valid @RequestBody ContactRequest request) {
-        contactMailService.send(request);
+        try {
+            contactMailService.send(request);
 
-        return ResponseEntity.ok(Map.of(
-                "message", "Mensagem enviada com sucesso. Obrigado pelo contato!",
-                "name", request.name()
-        ));
+            return ResponseEntity.ok(Map.of(
+                    "message", "Mensagem enviada com sucesso. Obrigado pelo contato!",
+                    "name", request.name()
+            ));
+        } catch (MailException | IllegalStateException ex) {
+            log.error("Falha ao enviar mensagem do formulario de contato", ex);
+
+            return ResponseEntity.status(503).body(Map.of(
+                    "message", "Não foi possível enviar o e-mail agora. Verifique a configuração do serviço de e-mail."
+            ));
+        }
     }
 }
