@@ -20,7 +20,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(originPatterns = {"http://localhost:5173", "https://*.vercel.app"})
 public class PortfolioController {
 
     private static final Logger log = LoggerFactory.getLogger(PortfolioController.class);
