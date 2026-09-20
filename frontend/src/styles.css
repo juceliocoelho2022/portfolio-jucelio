@@ -25,9 +25,9 @@ body {
   margin: 0;
   font-family: Inter, sans-serif;
   background:
-          radial-gradient(circle at 10% 10%, rgba(122, 156, 255, 0.14), transparent 26%),
-          radial-gradient(circle at 90% 25%, rgba(89, 221, 182, 0.10), transparent 22%),
-          var(--bg);
+    radial-gradient(circle at 10% 10%, rgba(122, 156, 255, 0.14), transparent 26%),
+    radial-gradient(circle at 90% 25%, rgba(89, 221, 182, 0.10), transparent 22%),
+    var(--bg);
   color: var(--text);
   overflow-x: hidden;
 }
@@ -52,7 +52,7 @@ a {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(7, 16, 24, 0.88);
+  background: rgba(7, 16, 24, 0.90);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -77,25 +77,9 @@ a {
   color: var(--green);
 }
 
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.nav-links a {
-  color: var(--muted);
-  font-size: 0.9rem;
-  font-weight: 600;
-  transition: color 0.2s ease;
-}
-
-.nav-links a:hover {
-  color: #fff;
-}
-
+/* Menu hambúrguer visível em desktop, tablet e mobile */
 .menu-button {
-  display: none;
+  display: inline-flex;
   width: 42px;
   height: 42px;
   align-items: center;
@@ -107,19 +91,81 @@ a {
   cursor: pointer;
   position: relative;
   z-index: 102;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.menu-button:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(122, 156, 255, 0.35);
+}
+
+/* Menu recolhido por padrão em qualquer tamanho de tela */
+.nav-links {
+  position: fixed;
+  top: calc(var(--header-height) + 10px);
+  right: max(20px, calc((100vw - 1120px) / 2));
+  z-index: 101;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(9, 19, 31, 0.98);
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.48);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-10px) scale(0.98);
+  transform-origin: top right;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    visibility 0.2s ease;
+}
+
+.nav-links.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.nav-links a {
+  padding: 13px 14px;
+  border-radius: 9px;
+  color: var(--muted);
+  font-size: 0.94rem;
+  font-weight: 600;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .menu-backdrop {
-  display: none;
+  position: fixed;
+  inset: var(--header-height) 0 0;
+  z-index: 99;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: rgba(0, 0, 0, 0.36);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
 
 .hero {
   min-height: auto;
   display: grid;
   grid-template-columns: 1.12fr 0.88fr;
-  gap: 52px;
+  gap: 44px;
   align-items: center;
-  padding: 64px 0 58px;
+  padding: 52px 0 46px;
 }
 
 .hero-copy {
@@ -135,8 +181,8 @@ a {
 }
 
 h1 {
-  margin: 16px 0 20px;
-  font: 700 clamp(2.8rem, 5.8vw, 5.2rem) / 1 'Space Grotesk';
+  margin: 14px 0 18px;
+  font: 700 clamp(2.7rem, 5.4vw, 4.9rem) / 1 'Space Grotesk';
   letter-spacing: -0.05em;
 }
 
@@ -150,15 +196,15 @@ h1 span {
 .hero p,
 .section-title + p {
   color: var(--muted);
-  font-size: 1rem;
-  line-height: 1.65;
+  font-size: 0.98rem;
+  line-height: 1.6;
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 26px;
+  margin-top: 22px;
 }
 
 .btn {
@@ -167,16 +213,16 @@ h1 span {
   justify-content: center;
   gap: 8px;
   border: 1px solid var(--line);
-  padding: 11px 16px;
+  padding: 10px 15px;
   border-radius: 10px;
   font-weight: 700;
   background: rgba(255, 255, 255, 0.025);
   color: #fff;
   cursor: pointer;
   transition:
-          transform 0.2s ease,
-          border-color 0.2s ease,
-          background 0.2s ease;
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
 }
 
 .btn:hover {
@@ -200,7 +246,7 @@ h1 span {
 .dots {
   display: flex;
   gap: 7px;
-  padding: 12px 14px;
+  padding: 11px 13px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -213,15 +259,15 @@ h1 span {
 
 pre {
   margin: 0;
-  padding: 22px;
-  line-height: 1.62;
+  padding: 20px;
+  line-height: 1.55;
   color: #cfe0f3;
   white-space: pre-wrap;
-  font-size: 0.9rem;
+  font-size: 0.86rem;
 }
 
 .section {
-  padding: 72px 0;
+  padding: 62px 0;
 }
 
 .alt {
@@ -231,20 +277,20 @@ pre {
 
 .section-title {
   max-width: 780px;
-  margin-bottom: 34px;
+  margin-bottom: 28px;
 }
 
 .section-title h2,
 .contact-grid h2 {
-  margin: 9px 0;
-  font: 700 clamp(1.9rem, 3.7vw, 3.1rem) / 1.1 'Space Grotesk';
+  margin: 8px 0;
+  font: 700 clamp(1.85rem, 3.5vw, 2.9rem) / 1.1 'Space Grotesk';
   letter-spacing: -0.03em;
 }
 
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
+  gap: 13px;
 }
 
 .feature,
@@ -254,19 +300,19 @@ pre {
   border: 1px solid var(--line);
   border-radius: 15px;
   background: linear-gradient(
-          150deg,
-          rgba(17, 32, 49, 0.95),
-          rgba(10, 20, 31, 0.95)
+    150deg,
+    rgba(17, 32, 49, 0.95),
+    rgba(10, 20, 31, 0.95)
   );
 }
 
 .feature {
-  padding: 20px;
+  padding: 18px;
 }
 
 .icon {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   display: grid;
   place-items: center;
   border-radius: 10px;
@@ -275,14 +321,14 @@ pre {
 }
 
 .feature h3 {
-  margin: 14px 0 7px;
+  margin: 12px 0 6px;
 }
 
 .feature p {
   margin: 0;
   color: var(--muted);
-  font-size: 0.88rem;
-  line-height: 1.55;
+  font-size: 0.86rem;
+  line-height: 1.5;
 }
 
 .stack-wrap {
@@ -313,11 +359,11 @@ pre {
 .projects {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 14px;
 }
 
 .project {
-  padding: 22px;
+  padding: 20px;
 }
 
 .project-top {
@@ -335,22 +381,22 @@ pre {
 }
 
 .project h3 {
-  margin: 10px 0;
-  font: 700 1.28rem 'Space Grotesk';
+  margin: 9px 0;
+  font: 700 1.25rem 'Space Grotesk';
 }
 
 .project p {
   margin: 0;
   color: var(--muted);
-  line-height: 1.6;
-  font-size: 0.92rem;
+  line-height: 1.55;
+  font-size: 0.9rem;
 }
 
 .highlight-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 6px;
-  margin: 15px 0;
+  margin: 14px 0;
 }
 
 .highlight-list small {
@@ -366,11 +412,11 @@ pre {
 .education {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
+  gap: 13px;
 }
 
 .education > div {
-  padding: 19px;
+  padding: 18px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -384,19 +430,19 @@ pre {
 .contact-grid {
   display: grid;
   grid-template-columns: 0.95fr 1.05fr;
-  gap: 44px;
+  gap: 38px;
   align-items: start;
 }
 
 .contact-grid p {
   color: var(--muted);
-  line-height: 1.6;
+  line-height: 1.55;
 }
 
 .contact-form {
-  padding: 20px;
+  padding: 18px;
   display: grid;
-  gap: 11px;
+  gap: 10px;
 }
 
 input,
@@ -404,7 +450,7 @@ textarea {
   width: 100%;
   border: 1px solid var(--line);
   border-radius: 9px;
-  padding: 11px 13px;
+  padding: 10px 12px;
   background: #0a1521;
   color: #fff;
   outline: none;
@@ -427,7 +473,7 @@ textarea:focus {
 }
 
 footer {
-  padding: 22px 0;
+  padding: 20px 0;
   border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 0.82rem;
@@ -442,12 +488,12 @@ footer {
 @media (max-width: 980px) {
   .hero {
     grid-template-columns: 1fr 0.8fr;
-    gap: 34px;
-    padding: 54px 0 50px;
+    gap: 30px;
+    padding: 46px 0 42px;
   }
 
   h1 {
-    font-size: clamp(2.7rem, 6vw, 4.4rem);
+    font-size: clamp(2.55rem, 6vw, 4.2rem);
   }
 
   .feature-grid {
@@ -464,105 +510,50 @@ footer {
     width: min(100% - 28px, 1120px);
   }
 
-  .menu-button {
-    display: inline-flex;
-  }
-
   .nav-links {
-    position: fixed;
-    top: var(--header-height);
+    top: calc(var(--header-height) + 8px);
     left: 14px;
     right: 14px;
-    z-index: 101;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    padding: 8px;
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    background: rgba(9, 19, 31, 0.98);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.42);
-
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transform: translateY(-8px);
-    transition:
-            opacity 0.2s ease,
-            transform 0.2s ease,
-            visibility 0.2s ease;
-  }
-
-  .nav-links.open {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transform: translateY(0);
-  }
-
-  .nav-links a {
-    padding: 13px 14px;
-    border-radius: 9px;
-    font-size: 0.96rem;
-  }
-
-  .nav-links a:hover {
-    background: rgba(255, 255, 255, 0.04);
-  }
-
-  .menu-backdrop {
-    position: fixed;
-    inset: var(--header-height) 0 0;
-    z-index: 99;
-    display: block;
-    border: 0;
-    padding: 0;
-    background: rgba(0, 0, 0, 0.36);
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
+    width: auto;
+    transform-origin: top center;
   }
 
   .hero {
     grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 42px 0 38px;
+    gap: 22px;
+    padding: 38px 0 34px;
   }
 
   h1 {
-    margin: 13px 0 16px;
-    font-size: clamp(2.35rem, 11vw, 3.5rem);
+    margin: 12px 0 15px;
+    font-size: clamp(2.2rem, 10.5vw, 3.35rem);
   }
 
   .hero p {
-    font-size: 0.95rem;
+    font-size: 0.94rem;
   }
 
   .actions {
-    margin-top: 22px;
-  }
-
-  .code-card {
-    max-width: 100%;
+    margin-top: 20px;
   }
 
   pre {
-    padding: 18px;
-    font-size: 0.82rem;
-    line-height: 1.5;
+    padding: 17px;
+    font-size: 0.81rem;
+    line-height: 1.48;
   }
 
   .section {
-    padding: 54px 0;
+    padding: 48px 0;
   }
 
   .section-title {
-    margin-bottom: 26px;
+    margin-bottom: 24px;
   }
 
   .section-title h2,
   .contact-grid h2 {
-    font-size: clamp(1.75rem, 8vw, 2.45rem);
+    font-size: clamp(1.7rem, 7.5vw, 2.35rem);
   }
 
   .projects,
@@ -572,7 +563,7 @@ footer {
   }
 
   .contact-grid {
-    gap: 26px;
+    gap: 24px;
   }
 
   .footer-content {
@@ -603,10 +594,10 @@ footer {
   .feature,
   .contact-form,
   .education > div {
-    padding: 18px;
+    padding: 17px;
   }
 
   .section {
-    padding: 46px 0;
+    padding: 42px 0;
   }
 }
