@@ -17,7 +17,7 @@ public class PortfolioService {
                 "Plataforma de pagamentos orientada a eventos com foco em resiliência, segurança e observabilidade.",
                 List.of("Java 21", "Spring Boot", "Kafka", "PostgreSQL", "Redis", "Docker"),
                 List.of("Idempotency Key", "DLT", "JWT", "API Gateway", "Prometheus", "Grafana", "Tempo", "Loki"),
-                "https://github.com/juceliocoelho2022"
+                "https://github.com/juceliocoelho2022/nexapay-event-driven-payments"
             ),
             new Project(
                 2L,
@@ -26,7 +26,7 @@ public class PortfolioService {
                 "Sistema de gestão de projetos de PD&I usando arquitetura modular e boas práticas de APIs REST.",
                 List.of("Java 21", "Spring Boot", "JPA", "Flyway", "OpenAPI", "PostgreSQL"),
                 List.of("ProblemDetail", "Bean Validation", "Versionamento otimista", "Testes automatizados"),
-                "https://github.com/juceliocoelho2022"
+                "https://github.com/juceliocoelho2022/innovationhub"
             ),
             new Project(
                 3L,
@@ -35,7 +35,7 @@ public class PortfolioService {
                 "Plataforma de análise de risco e prevenção a fraudes com eventos e transactional outbox.",
                 List.of("Java", "Spring Boot", "Kafka", "Redis", "PostgreSQL"),
                 List.of("Risk Score", "Transactional Outbox", "Eventos", "Resiliência"),
-                "https://github.com/juceliocoelho2022"
+                "https://github.com/juceliocoelho2022/sentinelfraud-platform"
             ),
             new Project(
                 4L,
@@ -44,7 +44,7 @@ public class PortfolioService {
                 "SaaS multi-tenant com isolamento por tenant e segurança baseada em JWT.",
                 List.of("Spring Boot", "PostgreSQL", "RLS", "JWT", "Docker"),
                 List.of("Multi-tenancy", "Row Level Security", "JWT", "Docker"),
-                "https://github.com/juceliocoelho2022"
+                "https://github.com/juceliocoelho2022/tenantguard-java"
             ),
             new Project(
                 5L,
@@ -62,7 +62,7 @@ public class PortfolioService {
                 "Aplicativo Android para apoio a entregas e fluxo de rotas.",
                 List.of("Kotlin", "Jetpack Compose", "Android"),
                 List.of("Rotas", "QR Code", "UI moderna"),
-                "https://github.com/juceliocoelho2022"
+                "https://github.com/juceliocoelho2022/rotacerta"
             )
         );
     }
