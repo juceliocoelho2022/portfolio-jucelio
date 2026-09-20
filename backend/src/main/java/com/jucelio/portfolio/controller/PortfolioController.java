@@ -5,6 +5,8 @@ import com.jucelio.portfolio.model.Project;
 import com.jucelio.portfolio.service.ContactMailService;
 import com.jucelio.portfolio.service.PortfolioService;
 import com.jucelio.portfolio.service.ResumePdfService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
+@Tag(name = "Portfolio", description = "Endpoints públicos do portfólio")
 public class PortfolioController {
 
     private static final Logger log = LoggerFactory.getLogger(PortfolioController.class);
@@ -38,6 +41,7 @@ public class PortfolioController {
         this.contactMailService = contactMailService;
     }
 
+    @Operation(summary = "Health check", description = "Retorna o status atual da API.")
     @GetMapping("/health")
     public Map<String, Object> health() {
         return Map.of(
@@ -47,11 +51,13 @@ public class PortfolioController {
         );
     }
 
+    @Operation(summary = "Listar projetos", description = "Retorna os projetos profissionais persistidos no banco de dados.")
     @GetMapping("/projects")
     public List<Project> projects() {
         return portfolioService.getProjects();
     }
 
+    @Operation(summary = "Baixar currículo", description = "Gera e retorna o currículo profissional em PDF.")
     @GetMapping(value = "/resume", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> resume() {
         byte[] pdf = resumePdfService.generateResume();
@@ -63,6 +69,7 @@ public class PortfolioController {
                 .body(pdf);
     }
 
+    @Operation(summary = "Enviar mensagem", description = "Valida os dados recebidos e envia uma mensagem pelo formulário de contato.")
     @PostMapping("/contact")
     public ResponseEntity<Map<String, String>> contact(@Valid @RequestBody ContactRequest request) {
         try {
