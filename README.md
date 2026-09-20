@@ -1,5 +1,7 @@
 # Jucelio Coelho — Portfólio Full Stack
 
+![CI](https://github.com/juceliocoelho2022/portfolio-jucelio/actions/workflows/ci.yml/badge.svg)
+
 Portfólio profissional desenvolvido com **React + Java 21 + Spring Boot**, com foco em demonstrar competências em **backend, APIs REST, microsserviços, mensageria, dados, testes, observabilidade e cloud**.
 
 > Projeto publicado com frontend no Vercel e backend no Render.
@@ -307,6 +309,25 @@ portfolio-jucelio/
 │       └── styles.css
 │
 └── README.md
+```
+
+## Integração Contínua
+
+O repositório possui uma pipeline de **GitHub Actions** executada em cada `push` e `pull request` para a branch `main`.
+
+A pipeline valida:
+
+- backend com Java 21;
+- `mvn clean verify`;
+- build da imagem Docker do backend;
+- frontend com Node.js 22;
+- `npm ci`;
+- `npm run build`.
+
+Arquivo:
+
+```text
+.github/workflows/ci.yml
 ```
 
 ## Deploy
