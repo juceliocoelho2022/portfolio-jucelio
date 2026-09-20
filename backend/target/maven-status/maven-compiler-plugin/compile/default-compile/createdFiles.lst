@@ -1,0 +1,5 @@
+com\jucelio\portfolio\dto\ContactRequest.class
+com\jucelio\portfolio\model\Project.class
+com\jucelio\portfolio\service\PortfolioService.class
+com\jucelio\portfolio\controller\PortfolioController.class
+com\jucelio\portfolio\PortfolioApplication.class
