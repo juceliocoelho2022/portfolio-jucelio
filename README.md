@@ -24,6 +24,10 @@ Portfólio profissional desenvolvido com **React + Java 21 + Spring Boot**, com 
 - Java 21
 - Spring Boot 3.5.5
 - Spring Web
+- Spring Data JPA
+- Hibernate
+- PostgreSQL
+- Flyway
 - Bean Validation
 - Spring Mail
 - Apache PDFBox
@@ -99,6 +103,21 @@ Prometheus / Grafana / Loki / Tempo
 ```
 
 A seção destaca princípios como **event-driven**, **idempotência**, **resiliência**, **retry/DLT** e **observabilidade distribuída**.
+
+### Persistência com PostgreSQL
+
+Os projetos do portfólio deixaram de ficar hardcoded no serviço Java e agora são carregados por **Spring Data JPA**.
+
+A estrutura usa:
+
+- `ProjectEntity` para mapeamento ORM;
+- `ProjectRepository` com Spring Data JPA;
+- PostgreSQL em produção;
+- Flyway para versionamento do schema;
+- migration inicial com os projetos e seus relacionamentos;
+- tabelas separadas para tecnologias e destaques.
+
+Em ambiente local ou quando as variáveis de banco ainda não estiverem configuradas, a aplicação usa H2 em memória como fallback seguro. Em produção, configure PostgreSQL pelas variáveis de ambiente.
 
 ## Funcionalidades
 
@@ -228,6 +247,11 @@ VITE_API_URL=https://portfolio-jucelio-api.onrender.com/api
 ### Backend — Render
 
 ```env
+DATABASE_URL=jdbc:postgresql://host:5432/database
+DATABASE_USERNAME=usuario
+DATABASE_PASSWORD=senha
+DATABASE_DRIVER=org.postgresql.Driver
+
 MAIL_HOST=smtp.gmail.com
 MAIL_PORT=587
 MAIL_USERNAME=seu-email@gmail.com
@@ -328,8 +352,6 @@ LinkedIn: https://www.linkedin.com/in/jucelio-desenvolvedor-sistema
 
 ## Próximas evoluções
 
-- Persistência dos projetos em PostgreSQL
-- Spring Data JPA + Flyway
 - Painel administrativo
 - CRUD de projetos
 - Proteção anti-spam / rate limiting no formulário
