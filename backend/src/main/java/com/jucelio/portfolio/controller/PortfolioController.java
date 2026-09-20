@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 @Tag(name = "Portfolio", description = "Endpoints públicos do portfólio")
 public class PortfolioController {
 
