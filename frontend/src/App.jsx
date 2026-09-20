@@ -178,6 +178,13 @@ function App() {
               </a>
 
               <a
+                  href="#experiencia"
+                  onClick={closeMenu}
+              >
+                Experiência
+              </a>
+
+              <a
                   href="#contato"
                   onClick={closeMenu}
               >
@@ -589,6 +596,73 @@ Open to Work ✓`}
 
             </div>
 
+          </section>
+
+          <section
+              className="section container"
+              id="experiencia"
+          >
+            <div className="section-title">
+              <span>
+                05. EXPERIÊNCIA
+              </span>
+
+              <h2>
+                Experiência profissional com tecnologia, educação e operações.
+              </h2>
+            </div>
+
+            <div className="experience-grid">
+              <article className="experience-card">
+                <div className="experience-top">
+                  <span>2025 — atual</span>
+                  <strong>Governo do Estado de São Paulo</strong>
+                </div>
+
+                <h3>
+                  Professor técnico — Desenvolvimento de Sistemas e Matemática
+                </h3>
+
+                <p>
+                  Atuação com ensino técnico e desenvolvimento de projetos práticos,
+                  aplicando programação, banco de dados, APIs, versionamento,
+                  testes e organização de projetos de software.
+                </p>
+
+                <div className="tech-list">
+                  <span>Java</span>
+                  <span>Banco de Dados</span>
+                  <span>Git</span>
+                  <span>Testes</span>
+                  <span>Kanban</span>
+                </div>
+              </article>
+
+              <article className="experience-card">
+                <div className="experience-top">
+                  <span>11 anos</span>
+                  <strong>Correios — ECT</strong>
+                </div>
+
+                <h3>
+                  Operações, logística e atendimento
+                </h3>
+
+                <p>
+                  Experiência em ambiente operacional de grande escala, com foco
+                  em processos, atendimento, organização, responsabilidade,
+                  cumprimento de prazos e resolução de problemas.
+                </p>
+
+                <div className="tech-list">
+                  <span>Processos</span>
+                  <span>Logística</span>
+                  <span>Atendimento</span>
+                  <span>Organização</span>
+                  <span>Resolução de problemas</span>
+                </div>
+              </article>
+            </div>
           </section>
 
           <section
