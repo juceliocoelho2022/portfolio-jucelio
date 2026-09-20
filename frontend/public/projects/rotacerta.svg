@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#10151c"/><stop offset="1" stop-color="#233028"/></linearGradient></defs>
+<rect width="1200" height="675" fill="url(#g)"/>
+<path d="M700 500 C760 430 720 360 820 330 C920 300 900 230 1010 170" fill="none" stroke="#59ddb6" stroke-width="12" stroke-linecap="round" stroke-dasharray="18 18"/>
+<g fill="#7a9cff"><circle cx="700" cy="500" r="22"/><circle cx="820" cy="330" r="22"/><circle cx="1010" cy="170" r="22"/></g>
+<rect x="75" y="85" width="500" height="180" rx="28" fill="#171f25" stroke="#415348"/>
+<text x="110" y="155" fill="#edf5ff" font-size="58" font-family="Arial" font-weight="700">RotaCerta</text>
+<text x="110" y="210" fill="#59ddb6" font-size="28" font-family="Arial">Entregas • Rotas • QR Code</text>
+<text x="75" y="545" fill="#9eb0c3" font-size="28" font-family="Arial">Kotlin  •  Jetpack Compose  •  Android</text>
+</svg>
