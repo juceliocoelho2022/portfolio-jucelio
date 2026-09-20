@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07151a"/><stop offset="1" stop-color="#10302f"/></linearGradient></defs>
+<rect width="1200" height="675" fill="url(#g)"/>
+<g fill="#0e2226" stroke="#59ddb6" stroke-opacity=".45" stroke-width="3"><rect x="700" y="130" width="150" height="150" rx="20"/><rect x="890" y="130" width="150" height="150" rx="20"/><rect x="700" y="320" width="150" height="150" rx="20"/><rect x="890" y="320" width="150" height="150" rx="20"/></g>
+<circle cx="775" cy="205" r="34" fill="#59ddb6"/><circle cx="965" cy="205" r="34" fill="#7a9cff"/><circle cx="775" cy="395" r="34" fill="#7a9cff"/><circle cx="965" cy="395" r="34" fill="#59ddb6"/>
+<text x="75" y="150" fill="#edf5ff" font-size="58" font-family="Arial" font-weight="700">TenantGuard Cloud</text>
+<text x="75" y="205" fill="#59ddb6" font-size="28" font-family="Arial">SaaS Multi-Tenant Security</text>
+<text x="75" y="545" fill="#9eb0c3" font-size="28" font-family="Arial">Spring Boot  •  PostgreSQL  •  RLS  •  JWT  •  Docker</text>
+</svg>
