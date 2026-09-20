@@ -227,7 +227,8 @@ Cenários cobertos incluem:
 - validação de payload inválido;
 - tratamento de indisponibilidade do serviço de e-mail;
 - inicialização do contexto com banco de testes;
-- execução das migrations Flyway.
+- execução das migrations Flyway;
+- integração contra PostgreSQL real em container efêmero com Testcontainers.
 
 O JaCoCo é executado durante:
 
@@ -383,7 +384,7 @@ portfolio-jucelio/
 - Rate limiting no formulário
 - Observabilidade do backend
 - Domínio próprio
-- Testes de integração com PostgreSQL via Testcontainers
+- Painel de cobertura de testes publicado pela CI
 
 ---
 
