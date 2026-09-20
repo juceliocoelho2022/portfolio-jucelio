@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071521"/><stop offset="1" stop-color="#0f2740"/></linearGradient><linearGradient id="a" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#59ddb6"/><stop offset="1" stop-color="#7a9cff"/></linearGradient></defs>
+<rect width="1200" height="675" fill="url(#g)"/>
+<circle cx="930" cy="180" r="220" fill="none" stroke="#59ddb6" stroke-opacity=".28" stroke-width="2"/>
+<circle cx="930" cy="180" r="150" fill="none" stroke="#7a9cff" stroke-opacity=".25" stroke-width="2"/>
+<path d="M720 370 C820 250 930 480 1080 330" fill="none" stroke="url(#a)" stroke-width="10" stroke-linecap="round"/>
+<g fill="#59ddb6"><circle cx="720" cy="370" r="12"/><circle cx="825" cy="320" r="12"/><circle cx="930" cy="405" r="12"/><circle cx="1080" cy="330" r="12"/></g>
+<rect x="70" y="80" width="500" height="170" rx="28" fill="#0c1b2a" stroke="#29465f"/>
+<text x="110" y="150" fill="#edf5ff" font-size="60" font-family="Arial" font-weight="700">NexaPay</text>
+<text x="110" y="205" fill="#59ddb6" font-size="28" font-family="Arial">Event-Driven Payments</text>
+<text x="80" y="545" fill="#9eb0c3" font-size="28" font-family="Arial">Java 21  •  Spring Boot  •  Kafka  •  PostgreSQL  •  Redis</text>
+</svg>
