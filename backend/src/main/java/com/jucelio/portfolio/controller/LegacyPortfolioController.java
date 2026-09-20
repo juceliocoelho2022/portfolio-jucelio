@@ -3,6 +3,7 @@ package com.jucelio.portfolio.controller;
 import com.jucelio.portfolio.dto.ContactRequest;
 import com.jucelio.portfolio.model.Project;
 import io.swagger.v3.oas.annotations.Hidden;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +44,10 @@ public class LegacyPortfolioController {
     }
 
     @PostMapping("/contact")
-    public ResponseEntity<Map<String, String>> contact(@Valid @RequestBody ContactRequest request) {
-        return portfolioController.contact(request);
+    public ResponseEntity<Map<String, String>> contact(
+            @Valid @RequestBody ContactRequest request,
+            HttpServletRequest httpRequest
+    ) {
+        return portfolioController.contact(request, httpRequest);
     }
 }
