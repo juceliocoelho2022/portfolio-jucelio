@@ -31,7 +31,8 @@ function App() {
   const [contact, setContact] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
+    website: ''
   })
   const [feedback, setFeedback] = useState('')
   const [sending, setSending] = useState(false)
@@ -109,7 +110,7 @@ function App() {
       const data = await response.json()
 
       if (!response.ok) {
-        setFeedback(data.message || 'Não foi possível enviar a mensagem.')
+        setFeedback(data.detail || data.message || 'Não foi possível enviar a mensagem.')
         return
       }
 
@@ -118,7 +119,8 @@ function App() {
       setContact({
         name: '',
         email: '',
-        message: ''
+        message: '',
+        website: ''
       })
     } catch {
       setFeedback(
@@ -907,6 +909,28 @@ Open to Work ✓`}
                           message: e.target.value
                         })
                     }
+                />
+
+                <input
+                    type="text"
+                    name="website"
+                    value={contact.website}
+                    onChange={e =>
+                        setContact({
+                          ...contact,
+                          website: e.target.value
+                        })
+                    }
+                    tabIndex="-1"
+                    autoComplete="off"
+                    aria-hidden="true"
+                    style={{
+                      position: 'absolute',
+                      left: '-10000px',
+                      width: '1px',
+                      height: '1px',
+                      overflow: 'hidden'
+                    }}
                 />
 
                 <button
