@@ -75,6 +75,31 @@ Render
         +-- PDFBox
 ```
 
+### Arquitetura NexaPay
+
+O portfólio também apresenta uma visão visual da arquitetura do NexaPay:
+
+```text
+Cliente / Frontend
+        |
+        v
+    API Gateway
+        |
+        v
+  Payment Service
+        |
+        v
+      Kafka
+     /     \
+    v       v
+PostgreSQL Redis
+        |
+        v
+Prometheus / Grafana / Loki / Tempo
+```
+
+A seção destaca princípios como **event-driven**, **idempotência**, **resiliência**, **retry/DLT** e **observabilidade distribuída**.
+
 ## Funcionalidades
 
 ### Projetos
