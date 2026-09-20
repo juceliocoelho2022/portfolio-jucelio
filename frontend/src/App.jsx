@@ -16,6 +16,15 @@ import {
 const API_URL =
     import.meta.env.VITE_API_URL || 'http://localhost:8080/api'
 
+const projectImages = {
+  NexaPay: '/projects/nexapay.svg',
+  InnovationHub: '/projects/innovationhub.svg',
+  'SentinelFraud Platform': '/projects/sentinelfraud.svg',
+  'TenantGuard Cloud': '/projects/tenantguard.svg',
+  'FraudShield AI': '/projects/fraudshield.svg',
+  RotaCerta: '/projects/rotacerta.svg'
+}
+
 function App() {
   const [projects, setProjects] = useState([])
   const [status, setStatus] = useState('Carregando projetos...')
@@ -507,6 +516,15 @@ Open to Work ✓`}
                       className={`project ${[1, 2, 3].includes(project.id) ? 'project-featured' : ''}`}
                       key={project.id}
                   >
+
+                    <div className="project-cover">
+                      <img
+                          src={projectImages[project.name]}
+                          alt={`Capa do projeto ${project.name}`}
+                          className="project-image"
+                          loading="lazy"
+                      />
+                    </div>
 
                     <div className="project-top">
 
