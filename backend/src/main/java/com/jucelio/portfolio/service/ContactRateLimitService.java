@@ -2,6 +2,7 @@ package com.jucelio.portfolio.service;
 
 import com.jucelio.portfolio.exception.RateLimitExceededException;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -14,15 +15,22 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class ContactRateLimitService {
 
-    private static final int MAX_REQUESTS = 5;
-    private static final Duration WINDOW = Duration.ofMinutes(10);
-
+    private final int maxRequests;
+    private final Duration window;
     private final Map<String, Deque<Instant>> requestsByClient = new ConcurrentHashMap<>();
+
+    public ContactRateLimitService(
+            @Value("${portfolio.contact.rate-limit.max-requests:5}") int maxRequests,
+            @Value("${portfolio.contact.rate-limit.window-minutes:10}") long windowMinutes
+    ) {
+        this.maxRequests = maxRequests;
+        this.window = Duration.ofMinutes(windowMinutes);
+    }
 
     public void check(HttpServletRequest request) {
         String clientKey = resolveClientIp(request);
         Instant now = Instant.now();
-        Instant cutoff = now.minus(WINDOW);
+        Instant cutoff = now.minus(window);
 
         Deque<Instant> attempts = requestsByClient.computeIfAbsent(
                 clientKey,
@@ -34,11 +42,11 @@ public class ContactRateLimitService {
                 attempts.removeFirst();
             }
 
-            if (attempts.size() >= MAX_REQUESTS) {
+            if (attempts.size() >= maxRequests) {
                 Instant oldest = attempts.peekFirst();
                 long retryAfter = Math.max(
                         1,
-                        Duration.between(now, oldest.plus(WINDOW)).toSeconds()
+                        Duration.between(now, oldest.plus(window)).toSeconds()
                 );
                 throw new RateLimitExceededException(retryAfter);
             }
