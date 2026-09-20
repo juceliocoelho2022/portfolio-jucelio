@@ -59,6 +59,8 @@ O frontend é desenvolvido em React e consome uma API Spring Boot responsável p
 - GitHub Actions
 - Testes automatizados com JUnit 5 e MockMvc
 - JaCoCo para cobertura de testes
+- Spring Boot Actuator
+- Métricas Prometheus
 - Layout responsivo
 - Deploy contínuo
 
@@ -85,6 +87,9 @@ JUnit 5
 Mockito
 MockMvc
 JaCoCo
+Spring Boot Actuator
+Micrometer
+Prometheus
 ```
 
 ### Frontend
@@ -382,7 +387,7 @@ http://localhost:5173
 ### Frontend
 
 ```env
-VITE_API_URL=https://portfolio-jucelio-api.onrender.com/api
+VITE_API_URL=https://portfolio-jucelio-api.onrender.com/api/v1
 ```
 
 ### Backend
@@ -443,11 +448,24 @@ portfolio-jucelio/
 
 ---
 
+## Observabilidade do backend
+
+A API expõe endpoints operacionais com **Spring Boot Actuator** e métricas no formato **Prometheus**.
+
+```text
+/actuator/health
+/actuator/info
+/actuator/prometheus
+```
+
+O endpoint de health retorna apenas o estado agregado da aplicação; detalhes internos permanecem ocultos.
+
+---
+
 ## Próximas evoluções
 
 - Painel administrativo
 - CRUD de projetos
-- Observabilidade do backend
 - Domínio próprio
 - Painel de cobertura de testes publicado pela CI
 
