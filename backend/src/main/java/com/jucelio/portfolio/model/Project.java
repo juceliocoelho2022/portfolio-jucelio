@@ -18,10 +18,10 @@ public record Project(
         @Schema(example = "Plataforma de pagamentos orientada a eventos.")
         String description,
 
-        @Schema(example = "["Java 21", "Spring Boot", "Kafka", "PostgreSQL"]")
+        @Schema(example = "[\"Java 21\", \"Spring Boot\", \"Kafka\", \"PostgreSQL\"]")
         List<String> technologies,
 
-        @Schema(example = "["Idempotência", "DLT", "Observabilidade"]")
+        @Schema(example = "[\"Idempotência\", \"DLT\", \"Observabilidade\"]")
         List<String> highlights,
 
         @Schema(example = "https://github.com/juceliocoelho2022")
