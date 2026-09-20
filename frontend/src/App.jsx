@@ -8,6 +8,7 @@ import {
   TestTube2,
   Cloud,
   Send,
+  Download,
   Menu,
   X
 } from 'lucide-react'
@@ -252,6 +253,14 @@ function App() {
                     href="#projetos"
                 >
                   Ver projetos
+                </a>
+
+                <a
+                    className="btn"
+                    href={`${API_URL}/resume`}
+                >
+                  <Download size={18} />
+                  Baixar currículo
                 </a>
 
                 <a
