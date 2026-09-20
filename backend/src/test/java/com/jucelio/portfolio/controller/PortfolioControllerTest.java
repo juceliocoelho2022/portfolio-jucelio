@@ -40,8 +40,25 @@ class PortfolioControllerTest {
     private ContactMailService contactMailService;
 
     @Test
-    void shouldReturnHealthStatus() throws Exception {
+    void shouldKeepLegacyHealthEndpointWorking() throws Exception {
         mockMvc.perform(get("/api/health"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("UP"))
+                .andExpect(jsonPath("$.application").value("portfolio-api"));
+    }
+
+    @Test
+    void shouldKeepLegacyProjectsEndpointWorking() throws Exception {
+        when(portfolioService.getProjects()).thenReturn(List.of());
+
+        mockMvc.perform(get("/api/projects"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(0));
+    }
+
+    @Test
+    void shouldReturnHealthStatus() throws Exception {
+        mockMvc.perform(get("/api/v1/health"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("UP"))
                 .andExpect(jsonPath("$.application").value("portfolio-api"))
@@ -62,7 +79,7 @@ class PortfolioControllerTest {
 
         when(portfolioService.getProjects()).thenReturn(List.of(project));
 
-        mockMvc.perform(get("/api/projects"))
+        mockMvc.perform(get("/api/v1/projects"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1))
                 .andExpect(jsonPath("$[0].name").value("NexaPay"))
@@ -75,7 +92,7 @@ class PortfolioControllerTest {
         byte[] pdf = "%PDF-1.7 test".getBytes();
         when(resumePdfService.generateResume()).thenReturn(pdf);
 
-        mockMvc.perform(get("/api/resume"))
+        mockMvc.perform(get("/api/v1/resume"))
                 .andExpect(status().isOk())
                 .andExpect(header().string(
                         "Content-Disposition",
@@ -95,7 +112,7 @@ class PortfolioControllerTest {
                 }
                 """;
 
-        mockMvc.perform(post("/api/contact")
+        mockMvc.perform(post("/api/v1/contact")
                         .contentType("application/json")
                         .content(body))
                 .andExpect(status().isOk())
@@ -116,7 +133,7 @@ class PortfolioControllerTest {
                 }
                 """;
 
-        mockMvc.perform(post("/api/contact")
+        mockMvc.perform(post("/api/v1/contact")
                         .contentType("application/json")
                         .content(body))
                 .andExpect(status().isBadRequest())
@@ -134,7 +151,7 @@ class PortfolioControllerTest {
         when(resumePdfService.generateResume())
                 .thenThrow(new IllegalStateException("Falha ao gerar PDF"));
 
-        mockMvc.perform(get("/api/resume"))
+        mockMvc.perform(get("/api/v1/resume"))
                 .andExpect(status().isInternalServerError())
                 .andExpect(content().contentType("application/problem+json"))
                 .andExpect(jsonPath("$.title").value("Erro interno"))
@@ -144,7 +161,7 @@ class PortfolioControllerTest {
 
     @Test
     void shouldReturnProblemDetailForUnknownResource() throws Exception {
-        mockMvc.perform(get("/api/nao-existe"))
+        mockMvc.perform(get("/api/v1/nao-existe"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType("application/problem+json"))
                 .andExpect(jsonPath("$.title").value("Recurso não encontrado"))
@@ -166,7 +183,7 @@ class PortfolioControllerTest {
                 }
                 """;
 
-        mockMvc.perform(post("/api/contact")
+        mockMvc.perform(post("/api/v1/contact")
                         .contentType("application/json")
                         .content(body))
                 .andExpect(status().isServiceUnavailable())
