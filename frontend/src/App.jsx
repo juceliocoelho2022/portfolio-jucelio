@@ -25,6 +25,7 @@ function App() {
     message: ''
   })
   const [feedback, setFeedback] = useState('')
+  const [sending, setSending] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
@@ -84,6 +85,7 @@ function App() {
   async function handleSubmit(e) {
     e.preventDefault()
 
+    setSending(true)
     setFeedback('Enviando...')
 
     try {
@@ -98,7 +100,7 @@ function App() {
       const data = await response.json()
 
       if (!response.ok) {
-        setFeedback('Confira os campos informados.')
+        setFeedback('Não foi possível enviar. Confira os campos e tente novamente.')
         return
       }
 
@@ -111,8 +113,10 @@ function App() {
       })
     } catch {
       setFeedback(
-          'Não foi possível enviar a mensagem. Verifique se o backend está disponível.'
+          'Não foi possível enviar a mensagem agora. Tente novamente em alguns instantes.'
       )
+    } finally {
+      setSending(false)
     }
   }
 
@@ -692,8 +696,8 @@ Open to Work ✓`}
                 </h2>
 
                 <p>
-                  O formulário abaixo envia os dados
-                  para um endpoint REST no backend Java.
+                  Envie uma mensagem pelo formulário. O backend Java valida os dados
+                  e encaminha o contato diretamente para meu e-mail.
                 </p>
 
               </div>
@@ -744,11 +748,12 @@ Open to Work ✓`}
                 <button
                     className="btn primary submit"
                     type="submit"
+                    disabled={sending}
                 >
 
                   <Send size={18} />
 
-                  Enviar mensagem
+                  {sending ? 'Enviando...' : 'Enviar mensagem'}
 
                 </button>
 
