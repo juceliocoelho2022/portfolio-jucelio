@@ -335,6 +335,37 @@ Open to Work ✓`}
 
           </section>
 
+          <section className="professional-highlights container" aria-label="Destaques profissionais">
+            <div className="highlight-chip">
+              <strong>Java 21</strong>
+              <span>Backend moderno</span>
+            </div>
+            <div className="highlight-chip">
+              <strong>Spring Boot</strong>
+              <span>APIs e microsserviços</span>
+            </div>
+            <div className="highlight-chip">
+              <strong>Kafka</strong>
+              <span>Event-driven</span>
+            </div>
+            <div className="highlight-chip">
+              <strong>PostgreSQL</strong>
+              <span>Dados confiáveis</span>
+            </div>
+            <div className="highlight-chip">
+              <strong>Docker</strong>
+              <span>Ambientes reproduzíveis</span>
+            </div>
+            <div className="highlight-chip">
+              <strong>Observabilidade</strong>
+              <span>Logs, métricas e traces</span>
+            </div>
+            <div className="highlight-chip highlight-open">
+              <strong>Open to Work</strong>
+              <span>Java Backend</span>
+            </div>
+          </section>
+
           <section
               className="section container"
               id="sobre"
