@@ -13,9 +13,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.mail.MailException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +27,6 @@ import java.util.Map;
 @Tag(name = "Portfolio", description = "Endpoints públicos do portfólio")
 public class PortfolioController {
 
-    private static final Logger log = LoggerFactory.getLogger(PortfolioController.class);
 
     private final PortfolioService portfolioService;
     private final ResumePdfService resumePdfService;
@@ -174,19 +170,11 @@ public class PortfolioController {
                     )
             )
             @RequestBody ContactRequest request) {
-        try {
-            contactMailService.send(request);
+        contactMailService.send(request);
 
-            return ResponseEntity.ok(Map.of(
-                    "message", "Mensagem enviada com sucesso. Obrigado pelo contato!",
-                    "name", request.name()
-            ));
-        } catch (MailException | IllegalStateException ex) {
-            log.error("Falha ao enviar mensagem do formulario de contato", ex);
-
-            return ResponseEntity.status(503).body(Map.of(
-                    "message", "Não foi possível enviar o e-mail agora. Verifique a configuração do serviço de e-mail."
-            ));
-        }
+        return ResponseEntity.ok(Map.of(
+                "message", "Mensagem enviada com sucesso. Obrigado pelo contato!",
+                "name", request.name()
+        ));
     }
 }
