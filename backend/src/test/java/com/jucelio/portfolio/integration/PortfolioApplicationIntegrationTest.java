@@ -55,4 +55,14 @@ class PortfolioApplicationIntegrationTest {
                 .andExpect(jsonPath("$.status").value("UP"))
                 .andExpect(jsonPath("$.application").value("portfolio-api"));
     }
+
+    @Test
+    void shouldExposeOpenApiSpecification() throws Exception {
+        mockMvc.perform(get("/v3/api-docs"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.openapi").exists())
+                .andExpect(jsonPath("$.info.title").value("Portfolio Jucelio API"))
+                .andExpect(jsonPath("$.paths['/api/projects']").exists())
+                .andExpect(jsonPath("$.paths['/api/contact']").exists());
+    }
 }
