@@ -531,6 +531,24 @@ O dashboard também apresenta indicadores operacionais voltados a SLOs:
 
 A API publica histogramas de latência HTTP para permitir o cálculo de p95 no Prometheus.
 
+### Alertas Prometheus
+
+O repositório inclui regras de alerta para:
+
+- API indisponível por 2 minutos;
+- taxa elevada de erros 5xx;
+- latência p95 acima de 1,5 s;
+- sucesso do Resend abaixo de 95% quando há tráfego;
+- conexões pendentes no HikariCP.
+
+As regras ficam em:
+
+```text
+observability/prometheus/alerts.yml
+```
+
+Os alertas podem ser visualizados diretamente no Prometheus em `Alerts`. Para notificações externas por e-mail, Slack ou webhook, o próximo passo é adicionar o Alertmanager.
+
 Arquivos principais:
 
 ```text
