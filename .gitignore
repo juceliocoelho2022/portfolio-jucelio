@@ -1,3 +1,6 @@
 
 .idea/
 frontend/node_modules/
+
+# Local alerting secrets
+.secrets/
