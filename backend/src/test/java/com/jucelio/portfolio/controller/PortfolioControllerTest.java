@@ -4,6 +4,7 @@ import com.jucelio.portfolio.model.Project;
 import com.jucelio.portfolio.exception.RateLimitExceededException;
 import com.jucelio.portfolio.service.ContactMailService;
 import com.jucelio.portfolio.service.ContactRateLimitService;
+import com.jucelio.portfolio.service.PortfolioMetricsService;
 import com.jucelio.portfolio.service.PortfolioService;
 import com.jucelio.portfolio.service.ResumePdfService;
 import org.junit.jupiter.api.Test;
@@ -43,6 +44,9 @@ class PortfolioControllerTest {
 
     @MockitoBean
     private ContactRateLimitService contactRateLimitService;
+
+    @MockitoBean
+    private PortfolioMetricsService portfolioMetricsService;
 
     @Test
     void shouldKeepLegacyHealthEndpointWorking() throws Exception {
@@ -105,6 +109,8 @@ class PortfolioControllerTest {
                 ))
                 .andExpect(content().contentType("application/pdf"))
                 .andExpect(content().bytes(pdf));
+
+        verify(portfolioMetricsService).incrementResumeDownloads();
     }
 
     @Test
@@ -126,6 +132,7 @@ class PortfolioControllerTest {
                 .andExpect(jsonPath("$.name").value("Recrutador"));
 
         verify(contactMailService).send(any());
+        verify(portfolioMetricsService).incrementContactRequests();
     }
 
     @Test
