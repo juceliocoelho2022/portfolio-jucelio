@@ -33,3 +33,27 @@ services:
 volumes:
   prometheus-data:
   grafana-data:
+  alertmanager-data:
+
+
+  alertmanager:
+    image: prom/alertmanager:v0.28.1
+    container_name: portfolio-alertmanager
+    restart: unless-stopped
+    command:
+      - --config.file=/etc/alertmanager/alertmanager.yml
+      - --storage.path=/alertmanager
+    volumes:
+      - ./observability/alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+      - alertmanager-data:/alertmanager
+    ports:
+      - "9093:9093"
+
+  webhook-receiver:
+    image: mendhak/http-https-echo:35
+    container_name: portfolio-alert-webhook
+    restart: unless-stopped
+    environment:
+      HTTP_PORT: 8080
+    ports:
+      - "8088:8080"
