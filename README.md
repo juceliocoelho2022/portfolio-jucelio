@@ -50,7 +50,7 @@ O frontend é desenvolvido em React e consome uma API Spring Boot responsável p
 - Migrations com Flyway
 - Frontend React integrado à API
 - Currículo PDF gerado pelo backend
-- Formulário de contato com envio por SMTP
+- Formulário de contato com envio pela API HTTP do Resend
 - Bean Validation
 - Rate limiting no contato
 - Honeypot anti-spam no formulário
@@ -80,7 +80,7 @@ Hibernate
 Flyway
 PostgreSQL
 Bean Validation
-Spring Mail
+Resend Email API
 Apache PDFBox
 Maven
 JUnit 5
@@ -142,7 +142,7 @@ Variáveis de ambiente
       PortfolioService   ContactMailService  ResumePdfService
               │                │                │
               ▼                ▼                ▼
-        PostgreSQL         Gmail SMTP          PDFBox
+        PostgreSQL         Resend API          PDFBox
         JPA/Flyway
 ```
 
@@ -382,6 +382,22 @@ http://localhost:5173
 
 ---
 
+## Envio de e-mail com Resend
+
+O endpoint `POST /api/v1/contact` envia mensagens por HTTPS usando a API do Resend, evitando dependência de portas SMTP bloqueadas em ambientes cloud.
+
+```text
+Spring Boot
+   ↓ HTTPS
+Resend Email API
+   ↓
+Caixa de entrada
+```
+
+Para testes iniciais, pode ser usado `Portfolio <onboarding@resend.dev>`. Para produção com identidade própria, configure um domínio verificado no Resend e altere `CONTACT_FROM_EMAIL`.
+
+---
+
 ## Variáveis de ambiente
 
 ### Frontend
@@ -398,12 +414,9 @@ DATABASE_USERNAME=usuario
 DATABASE_PASSWORD=senha
 DATABASE_DRIVER=org.postgresql.Driver
 
-MAIL_HOST=smtp.gmail.com
-MAIL_PORT=587
-MAIL_USERNAME=seu-email@gmail.com
-MAIL_PASSWORD=sua-senha-de-app
+RESEND_API_KEY=sua-chave-resend
 CONTACT_TO_EMAIL=seu-email@gmail.com
-CONTACT_FROM_EMAIL=seu-email@gmail.com
+CONTACT_FROM_EMAIL=Portfolio <onboarding@resend.dev>
 
 CONTACT_RATE_LIMIT_MAX_REQUESTS=5
 CONTACT_RATE_LIMIT_WINDOW_MINUTES=10
