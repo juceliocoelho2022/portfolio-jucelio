@@ -106,7 +106,22 @@ public class PortfolioController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Currículo PDF gerado com sucesso",
                     content = @Content(mediaType = "application/pdf")),
-            @ApiResponse(responseCode = "500", description = "Falha ao gerar o currículo")
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Falha ao gerar o currículo",
+                    content = @Content(
+                            mediaType = "application/problem+json",
+                            examples = @ExampleObject(value = """
+                                    {
+                                      "type": "https://portfolio-jucelio-api.onrender.com/problems/internal-error",
+                                      "title": "Erro interno",
+                                      "status": 500,
+                                      "detail": "Ocorreu um erro interno inesperado.",
+                                      "instance": "/api/v1/resume"
+                                    }
+                                    """)
+                    )
+            )
     })
     @GetMapping(value = "/resume", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> resume() {
@@ -139,11 +154,19 @@ public class PortfolioController {
                     responseCode = "400",
                     description = "Dados inválidos",
                     content = @Content(
-                            mediaType = "application/json",
+                            mediaType = "application/problem+json",
                             examples = @ExampleObject(value = """
                                     {
+                                      "type": "https://portfolio-jucelio-api.onrender.com/problems/validation",
+                                      "title": "Erro de validação",
                                       "status": 400,
-                                      "error": "Bad Request"
+                                      "detail": "Um ou mais campos enviados são inválidos.",
+                                      "instance": "/api/v1/contact",
+                                      "errors": {
+                                        "name": "Nome é obrigatório",
+                                        "email": "E-mail inválido",
+                                        "message": "A mensagem deve ter entre 10 e 2000 caracteres"
+                                      }
                                     }
                                     """)
                     )
@@ -151,16 +174,32 @@ public class PortfolioController {
             @ApiResponse(
                     responseCode = "429",
                     description = "Limite de requisições excedido",
-                    content = @Content(mediaType = "application/problem+json")
+                    content = @Content(
+                            mediaType = "application/problem+json",
+                            examples = @ExampleObject(value = """
+                                    {
+                                      "type": "https://portfolio-jucelio-api.onrender.com/problems/rate-limit",
+                                      "title": "Limite de requisições excedido",
+                                      "status": 429,
+                                      "detail": "Muitas tentativas de contato. Aguarde antes de tentar novamente.",
+                                      "instance": "/api/v1/contact",
+                                      "retryAfterSeconds": 120
+                                    }
+                                    """)
+                    )
             ),
             @ApiResponse(
                     responseCode = "503",
-                    description = "Serviço de e-mail indisponível",
+                    description = "Serviço de contato indisponível",
                     content = @Content(
-                            mediaType = "application/json",
+                            mediaType = "application/problem+json",
                             examples = @ExampleObject(value = """
                                     {
-                                      "message": "Não foi possível enviar o e-mail agora. Verifique a configuração do serviço de e-mail."
+                                      "type": "https://portfolio-jucelio-api.onrender.com/problems/contact-unavailable",
+                                      "title": "Serviço de contato indisponível",
+                                      "status": 503,
+                                      "detail": "Não foi possível enviar o e-mail agora. Tente novamente em instantes.",
+                                      "instance": "/api/v1/contact"
                                     }
                                     """)
                     )
