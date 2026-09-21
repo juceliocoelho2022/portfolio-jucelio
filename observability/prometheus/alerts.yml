@@ -1,0 +1,55 @@
+groups:
+  - name: portfolio-api-alerts
+    rules:
+      - alert: PortfolioApiDown
+        expr: up{job="portfolio-api"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Portfolio API indisponível"
+          description: "O Prometheus não consegue coletar métricas da API há pelo menos 2 minutos."
+
+      - alert: PortfolioApiHigh5xxRate
+        expr: sum(rate(http_server_requests_seconds_count{status=~"5.."}[5m])) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Taxa elevada de erros 5xx"
+          description: "A API está registrando uma taxa de erros 5xx acima do limite definido."
+
+      - alert: PortfolioApiHighP95Latency
+        expr: histogram_quantile(0.95, sum by (le) (rate(http_server_requests_seconds_bucket[5m]))) > 1.5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Latência p95 elevada"
+          description: "A latência p95 da API está acima de 1,5 segundo por pelo menos 5 minutos."
+
+      - alert: PortfolioResendLowSuccessRate
+        expr: |
+          (
+            100 *
+            sum(rate(http_client_requests_seconds_count{client_name="api.resend.com",status=~"2.."}[5m]))
+            /
+            clamp_min(sum(rate(http_client_requests_seconds_count{client_name="api.resend.com"}[5m])), 0.000001)
+          ) < 95
+          and
+          sum(rate(http_client_requests_seconds_count{client_name="api.resend.com"}[5m])) > 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Taxa de sucesso do Resend abaixo de 95%"
+          description: "A integração de e-mail está apresentando falhas acima do limite aceitável."
+
+      - alert: PortfolioHikariPendingConnections
+        expr: hikaricp_connections_pending{pool="HikariPool-1"} > 0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Conexões pendentes no HikariCP"
+          description: "Existem threads aguardando conexão com o banco de dados."
