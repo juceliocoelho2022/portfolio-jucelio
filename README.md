@@ -611,3 +611,33 @@ observability/grafana/dashboards/portfolio-overview.json
 Desenvolvido com **Java 21, Spring Boot e React**.
 
 </div>
+
+
+### Notificações reais no Slack
+
+O projeto inclui uma configuração opcional do Alertmanager para enviar alertas reais a um canal Slack sem versionar o webhook.
+
+1. Crie um Incoming Webhook no Slack para o canal desejado.
+2. Crie localmente o arquivo secreto:
+
+```powershell
+New-Item -ItemType Directory -Force .secrets
+Set-Content .secrets\slack_webhook_url "https://hooks.slack.com/services/SEU/WEBHOOK/AQUI"
+```
+
+> Não envie esse webhook para o GitHub nem compartilhe a URL. A pasta `.secrets/` está ignorada pelo Git.
+
+3. Suba a stack usando o override:
+
+```powershell
+docker compose -f docker-compose.observability.yml -f docker-compose.alerting-slack.yml down
+docker compose -f docker-compose.observability.yml -f docker-compose.alerting-slack.yml up -d
+```
+
+4. Confira o Alertmanager:
+
+```text
+http://localhost:9093
+```
+
+O alerta `PortfolioWatchdog` deve gerar uma mensagem no canal `#portfolio-alerts`. Para voltar ao webhook local, suba apenas `docker-compose.observability.yml`.
