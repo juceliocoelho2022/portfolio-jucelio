@@ -547,7 +547,36 @@ As regras ficam em:
 observability/prometheus/alerts.yml
 ```
 
-Os alertas podem ser visualizados diretamente no Prometheus em `Alerts`. Para notificações externas por e-mail, Slack ou webhook, o próximo passo é adicionar o Alertmanager.
+Os alertas podem ser visualizados diretamente no Prometheus em `Alerts`.
+
+### Alertmanager e webhook local
+
+A stack inclui **Alertmanager** e um receptor HTTP local para validar o fluxo completo de notificações:
+
+```text
+Prometheus
+   ↓
+Alertmanager :9093
+   ↓
+Webhook local :8088
+```
+
+Interfaces locais:
+
+```text
+Prometheus:   http://localhost:9090
+Alertmanager: http://localhost:9093
+Grafana:      http://localhost:3000
+Webhook:      http://localhost:8088
+```
+
+O alerta `PortfolioWatchdog` é intencional e permanece ativo para comprovar continuamente que o pipeline de alertas está operacional. As entregas podem ser verificadas com:
+
+```bash
+docker logs portfolio-alert-webhook
+```
+
+Depois da validação local, o receiver do Alertmanager pode ser trocado por Slack, e-mail ou outro webhook externo.
 
 Arquivos principais:
 
