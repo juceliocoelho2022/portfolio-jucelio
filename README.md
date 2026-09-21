@@ -518,6 +518,19 @@ O datasource Prometheus e o dashboard são provisionados automaticamente. O dash
 - conexões HikariCP;
 - uso de CPU do processo.
 
+### SLOs e saúde operacional
+
+O dashboard também apresenta indicadores operacionais voltados a SLOs:
+
+- disponibilidade da API;
+- erros HTTP 5xx nos últimos 5 minutos;
+- latência HTTP p95;
+- taxa de sucesso da integração Resend;
+- erros 4xx e 5xx;
+- métricas de JVM, CPU e pool HikariCP.
+
+A API publica histogramas de latência HTTP para permitir o cálculo de p95 no Prometheus.
+
 Arquivos principais:
 
 ```text
