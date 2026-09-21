@@ -460,6 +460,18 @@ A API expõe endpoints operacionais com **Spring Boot Actuator** e métricas no 
 
 O endpoint de health retorna apenas o estado agregado da aplicação; detalhes internos permanecem ocultos.
 
+### Métricas customizadas
+
+Além das métricas padrão de JVM, HTTP, JDBC e Tomcat, a aplicação publica métricas de negócio do portfólio:
+
+```text
+portfolio_contact_requests_total
+portfolio_contact_rate_limited_total
+portfolio_resume_downloads_total
+```
+
+Essas métricas permitem acompanhar contatos processados, bloqueios por rate limiting e downloads do currículo diretamente pelo Prometheus/Grafana.
+
 ---
 
 ## Próximas evoluções
