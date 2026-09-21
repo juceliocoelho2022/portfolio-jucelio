@@ -17,14 +17,17 @@ public class ContactRateLimitService {
 
     private final int maxRequests;
     private final Duration window;
+    private final PortfolioMetricsService portfolioMetricsService;
     private final Map<String, Deque<Instant>> requestsByClient = new ConcurrentHashMap<>();
 
     public ContactRateLimitService(
             @Value("${portfolio.contact.rate-limit.max-requests:5}") int maxRequests,
-            @Value("${portfolio.contact.rate-limit.window-minutes:10}") long windowMinutes
+            @Value("${portfolio.contact.rate-limit.window-minutes:10}") long windowMinutes,
+            PortfolioMetricsService portfolioMetricsService
     ) {
         this.maxRequests = maxRequests;
         this.window = Duration.ofMinutes(windowMinutes);
+        this.portfolioMetricsService = portfolioMetricsService;
     }
 
     public void check(HttpServletRequest request) {
@@ -48,6 +51,7 @@ public class ContactRateLimitService {
                         1,
                         Duration.between(now, oldest.plus(window)).toSeconds()
                 );
+                portfolioMetricsService.incrementContactRateLimited();
                 throw new RateLimitExceededException(retryAfter);
             }
 
