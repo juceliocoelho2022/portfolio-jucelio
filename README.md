@@ -570,7 +570,9 @@ Grafana:      http://localhost:3000
 Webhook:      http://localhost:8088
 ```
 
-O alerta `PortfolioWatchdog` é intencional e permanece ativo para comprovar continuamente que o pipeline de alertas está operacional. As entregas podem ser verificadas com:
+Para testes manuais do pipeline de alertas, envie um payload de teste pelo webhook local ou utilize temporariamente uma regra de teste. Em operação normal, apenas alertas reais permanecem habilitados.
+
+As entregas locais podem ser verificadas com:
 
 ```bash
 docker logs portfolio-alert-webhook
@@ -640,4 +642,4 @@ docker compose -f docker-compose.observability.yml -f docker-compose.alerting-sl
 http://localhost:9093
 ```
 
-O alerta `PortfolioWatchdog` deve gerar uma mensagem no canal `#portfolio-alerts`. Para voltar ao webhook local, suba apenas `docker-compose.observability.yml`.
+Os alertas reais configurados no Prometheus serão encaminhados ao canal `#portfolio-alerts`. Para voltar ao webhook local, suba apenas `docker-compose.observability.yml`.
