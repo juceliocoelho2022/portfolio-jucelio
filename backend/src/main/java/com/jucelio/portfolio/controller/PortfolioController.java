@@ -4,6 +4,7 @@ import com.jucelio.portfolio.dto.ContactRequest;
 import com.jucelio.portfolio.model.Project;
 import com.jucelio.portfolio.service.ContactMailService;
 import com.jucelio.portfolio.service.ContactRateLimitService;
+import com.jucelio.portfolio.service.PortfolioMetricsService;
 import com.jucelio.portfolio.service.PortfolioService;
 import com.jucelio.portfolio.service.ResumePdfService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,17 +35,20 @@ public class PortfolioController {
     private final ResumePdfService resumePdfService;
     private final ContactMailService contactMailService;
     private final ContactRateLimitService contactRateLimitService;
+    private final PortfolioMetricsService portfolioMetricsService;
 
     public PortfolioController(
             PortfolioService portfolioService,
             ResumePdfService resumePdfService,
             ContactMailService contactMailService,
-            ContactRateLimitService contactRateLimitService
+            ContactRateLimitService contactRateLimitService,
+            PortfolioMetricsService portfolioMetricsService
     ) {
         this.portfolioService = portfolioService;
         this.resumePdfService = resumePdfService;
         this.contactMailService = contactMailService;
         this.contactRateLimitService = contactRateLimitService;
+        this.portfolioMetricsService = portfolioMetricsService;
     }
 
     @Operation(summary = "Health check", description = "Retorna o status atual da API.")
@@ -107,6 +111,7 @@ public class PortfolioController {
     @GetMapping(value = "/resume", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> resume() {
         byte[] pdf = resumePdfService.generateResume();
+        portfolioMetricsService.incrementResumeDownloads();
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,
@@ -183,6 +188,7 @@ public class PortfolioController {
             HttpServletRequest httpRequest) {
         contactRateLimitService.check(httpRequest);
         contactMailService.send(request);
+        portfolioMetricsService.incrementContactRequests();
 
         return ResponseEntity.ok(Map.of(
                 "message", "Mensagem enviada com sucesso. Obrigado pelo contato!",
