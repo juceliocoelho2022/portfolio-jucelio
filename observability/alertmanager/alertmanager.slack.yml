@@ -1,0 +1,25 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: slack
+  group_by:
+    - alertname
+    - severity
+  group_wait: 10s
+  group_interval: 30s
+  repeat_interval: 4h
+
+receivers:
+  - name: slack
+    slack_configs:
+      - api_url_file: /run/secrets/slack_webhook_url
+        channel: "#portfolio-alerts"
+        send_resolved: true
+        title: '{{ .Status | toUpper }} — {{ .CommonLabels.alertname }}'
+        text: >-
+          *Severidade:* {{ .CommonLabels.severity }}
+          {{ range .Alerts }}
+          *Resumo:* {{ .Annotations.summary }}
+          *Descrição:* {{ .Annotations.description }}
+          {{ end }}
