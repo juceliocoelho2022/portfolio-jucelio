@@ -1,6 +1,15 @@
 groups:
   - name: portfolio-api-alerts
     rules:
+      - alert: PortfolioWatchdog
+        expr: vector(1)
+        for: 15s
+        labels:
+          severity: info
+        annotations:
+          summary: "Pipeline de alertas operacional"
+          description: "Alerta watchdog intencional para validar Prometheus → Alertmanager → webhook."
+
       - alert: PortfolioApiDown
         expr: up{job="portfolio-api"} == 0
         for: 2m
