@@ -8,34 +8,29 @@ import {
   TestTube2,
   Cloud,
   Send,
-  Download,
   Menu,
   X
 } from 'lucide-react'
 
 const API_URL =
-    import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1'
-
+    import.meta.env.VITE_API_URL || 'http://localhost:8080/api'
 const projectImages = {
-  NexaPay: '/projects/nexapay.svg',
-  InnovationHub: '/projects/innovationhub.svg',
-  'SentinelFraud Platform': '/projects/sentinelfraud.svg',
-  'TenantGuard Cloud': '/projects/tenantguard.svg',
-  'FraudShield AI': '/projects/fraudshield.svg',
-  RotaCerta: '/projects/rotacerta.svg'
+  NexaPay: '/projects/nexapay.png',
+  InnovationHub: '/projects/innovationhub.png',
+  'SentinelFraud Platform': '/projects/sentinelfraud.png',
+  'TenantGuard Cloud': '/projects/tenantguard.png',
+  'FraudShield AI': '/projects/fraudshield.png',
+  RotaCerta: '/projects/rotacerta.png'
 }
-
 function App() {
   const [projects, setProjects] = useState([])
   const [status, setStatus] = useState('Carregando projetos...')
   const [contact, setContact] = useState({
     name: '',
     email: '',
-    message: '',
-    website: ''
+    message: ''
   })
   const [feedback, setFeedback] = useState('')
-  const [sending, setSending] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
@@ -95,7 +90,6 @@ function App() {
   async function handleSubmit(e) {
     e.preventDefault()
 
-    setSending(true)
     setFeedback('Enviando...')
 
     try {
@@ -110,7 +104,7 @@ function App() {
       const data = await response.json()
 
       if (!response.ok) {
-        setFeedback(data.detail || data.message || 'Não foi possível enviar a mensagem.')
+        setFeedback('Confira os campos informados.')
         return
       }
 
@@ -119,15 +113,12 @@ function App() {
       setContact({
         name: '',
         email: '',
-        message: '',
-        website: ''
+        message: ''
       })
     } catch {
       setFeedback(
-          'Não foi possível enviar a mensagem agora. Tente novamente em alguns instantes.'
+          'Não foi possível enviar a mensagem. Verifique se o backend está disponível.'
       )
-    } finally {
-      setSending(false)
     }
   }
 
@@ -187,24 +178,10 @@ function App() {
               </a>
 
               <a
-                  href="#arquitetura"
-                  onClick={closeMenu}
-              >
-                Arquitetura
-              </a>
-
-              <a
                   href="#formacao"
                   onClick={closeMenu}
               >
                 Formação
-              </a>
-
-              <a
-                  href="#experiencia"
-                  onClick={closeMenu}
-              >
-                Experiência
               </a>
 
               <a
@@ -279,14 +256,6 @@ function App() {
 
                 <a
                     className="btn"
-                    href={`${API_URL}/resume`}
-                >
-                  <Download size={18} />
-                  Baixar currículo
-                </a>
-
-                <a
-                    className="btn"
                     href="https://github.com/juceliocoelho2022"
                     target="_blank"
                     rel="noreferrer"
@@ -351,37 +320,6 @@ Open to Work ✓`}
 
             </div>
 
-          </section>
-
-          <section className="professional-highlights container" aria-label="Destaques profissionais">
-            <div className="highlight-chip">
-              <strong>Java 21</strong>
-              <span>Backend moderno</span>
-            </div>
-            <div className="highlight-chip">
-              <strong>Spring Boot</strong>
-              <span>APIs e microsserviços</span>
-            </div>
-            <div className="highlight-chip">
-              <strong>Kafka</strong>
-              <span>Event-driven</span>
-            </div>
-            <div className="highlight-chip">
-              <strong>PostgreSQL</strong>
-              <span>Dados confiáveis</span>
-            </div>
-            <div className="highlight-chip">
-              <strong>Docker</strong>
-              <span>Ambientes reproduzíveis</span>
-            </div>
-            <div className="highlight-chip">
-              <strong>Observabilidade</strong>
-              <span>Logs, métricas e traces</span>
-            </div>
-            <div className="highlight-chip highlight-open">
-              <strong>Open to Work</strong>
-              <span>Java Backend</span>
-            </div>
           </section>
 
           <section
@@ -526,21 +464,31 @@ Open to Work ✓`}
                       key={project.id}
                   >
 
-                    <div className="project-cover">
-                      <img
-                          src={projectImages[project.name]}
-                          alt={`Capa do projeto ${project.name}`}
-                          className="project-image"
-                          loading="lazy"
-                      />
+                    <div className={`project-cover project-cover-${project.id}`}>
+                      {projectImages[project.name] && (
+                          <img
+                              src={projectImages[project.name]}
+                              alt={`Imagem do projeto ${project.name}`}
+                              className="project-image"
+                              onError={e => {
+                                e.currentTarget.style.display = 'none'
+                                e.currentTarget.parentElement.classList.add('project-cover-fallback')
+                              }}
+                          />
+                      )}
+
+                      <div className="project-cover-overlay">
+                        <small>{project.category}</small>
+                        <strong>{project.name}</strong>
+                      </div>
                     </div>
 
                     <div className="project-top">
 
                       <div className="project-meta">
-                        <span>
-                          {project.category}
-                        </span>
+          <span>
+            {project.category}
+          </span>
 
                         {[1, 2, 3].includes(project.id) && (
                             <strong className="featured-badge">
@@ -555,43 +503,24 @@ Open to Work ✓`}
                           rel="noreferrer"
                           aria-label={`Abrir ${project.name} no GitHub`}
                       >
-
                         <ExternalLink size={18} />
-
                       </a>
 
                     </div>
 
-                    <h3>
-                      {project.name}
-                    </h3>
-
-                    <p>
-                      {project.description}
-                    </p>
+                    <h3>{project.name}</h3>
+                    <p>{project.description}</p>
 
                     <div className="highlight-list">
-
                       {project.highlights.map(item => (
-
-                          <small key={item}>
-                            ✓ {item}
-                          </small>
-
+                          <small key={item}>✓ {item}</small>
                       ))}
-
                     </div>
 
                     <div className="tech-list">
-
                       {project.technologies.map(tech => (
-
-                          <span key={tech}>
-                      {tech}
-                    </span>
-
+                          <span key={tech}>{tech}</span>
                       ))}
-
                     </div>
 
                     <div className="project-actions">
@@ -612,94 +541,6 @@ Open to Work ✓`}
 
             </div>
 
-          </section>
-
-          <section
-              className="section alt"
-              id="arquitetura"
-          >
-            <div className="container">
-              <div className="section-title">
-                <span>
-                  04. ARQUITETURA
-                </span>
-
-                <h2>
-                  NexaPay — fluxo distribuído de pagamentos.
-                </h2>
-
-                <p>
-                  Uma visão resumida da arquitetura event-driven usada no projeto,
-                  destacando processamento, mensageria, persistência, cache e observabilidade.
-                </p>
-              </div>
-
-              <div className="architecture-flow">
-                <ArchitectureNode
-                    eyebrow="Entrada"
-                    title="Cliente / Frontend"
-                    text="Inicia operações e chamadas da API."
-                />
-
-                <div className="architecture-arrow">↓</div>
-
-                <ArchitectureNode
-                    eyebrow="Borda"
-                    title="API Gateway"
-                    text="Centraliza acesso, roteamento e autenticação."
-                />
-
-                <div className="architecture-arrow">↓</div>
-
-                <ArchitectureNode
-                    eyebrow="Core"
-                    title="Payment Service"
-                    text="Processa pagamentos, idempotência e regras de negócio."
-                    accent
-                />
-
-                <div className="architecture-arrow">↓</div>
-
-                <ArchitectureNode
-                    eyebrow="Mensageria"
-                    title="Apache Kafka"
-                    text="Eventos assíncronos, desacoplamento e DLT."
-                />
-
-                <div className="architecture-split">
-                  <ArchitectureNode
-                      eyebrow="Persistência"
-                      title="PostgreSQL"
-                      text="Dados transacionais e consistência."
-                  />
-
-                  <ArchitectureNode
-                      eyebrow="Performance"
-                      title="Redis"
-                      text="Cache e suporte à idempotência."
-                  />
-                </div>
-
-                <div className="architecture-arrow">↓</div>
-
-                <div className="architecture-observability">
-                  <strong>Observabilidade</strong>
-                  <span>Prometheus</span>
-                  <span>Grafana</span>
-                  <span>Loki</span>
-                  <span>Tempo</span>
-                </div>
-              </div>
-
-              <div className="architecture-note">
-                <strong>Princípios aplicados:</strong>
-                <span>Event-driven</span>
-                <span>Idempotência</span>
-                <span>Resiliência</span>
-                <span>Retry / DLT</span>
-                <span>Logs, métricas e traces</span>
-              </div>
-            </div>
           </section>
 
           <section
@@ -779,73 +620,6 @@ Open to Work ✓`}
 
           <section
               className="section container"
-              id="experiencia"
-          >
-            <div className="section-title">
-              <span>
-                05. EXPERIÊNCIA
-              </span>
-
-              <h2>
-                Experiência profissional com tecnologia, educação e operações.
-              </h2>
-            </div>
-
-            <div className="experience-grid">
-              <article className="experience-card">
-                <div className="experience-top">
-                  <span>2025 — atual</span>
-                  <strong>Governo do Estado de São Paulo</strong>
-                </div>
-
-                <h3>
-                  Professor técnico — Desenvolvimento de Sistemas e Matemática
-                </h3>
-
-                <p>
-                  Atuação com ensino técnico e desenvolvimento de projetos práticos,
-                  aplicando programação, banco de dados, APIs, versionamento,
-                  testes e organização de projetos de software.
-                </p>
-
-                <div className="tech-list">
-                  <span>Java</span>
-                  <span>Banco de Dados</span>
-                  <span>Git</span>
-                  <span>Testes</span>
-                  <span>Kanban</span>
-                </div>
-              </article>
-
-              <article className="experience-card">
-                <div className="experience-top">
-                  <span>11 anos</span>
-                  <strong>Correios — ECT</strong>
-                </div>
-
-                <h3>
-                  Operações, logística e atendimento
-                </h3>
-
-                <p>
-                  Experiência em ambiente operacional de grande escala, com foco
-                  em processos, atendimento, organização, responsabilidade,
-                  cumprimento de prazos e resolução de problemas.
-                </p>
-
-                <div className="tech-list">
-                  <span>Processos</span>
-                  <span>Logística</span>
-                  <span>Atendimento</span>
-                  <span>Organização</span>
-                  <span>Resolução de problemas</span>
-                </div>
-              </article>
-            </div>
-          </section>
-
-          <section
-              className="section container"
               id="contato"
           >
 
@@ -862,8 +636,8 @@ Open to Work ✓`}
                 </h2>
 
                 <p>
-                  Envie uma mensagem pelo formulário. O backend Java valida os dados
-                  e encaminha o contato diretamente para meu e-mail.
+                  O formulário abaixo envia os dados
+                  para um endpoint REST no backend Java.
                 </p>
 
               </div>
@@ -911,37 +685,14 @@ Open to Work ✓`}
                     }
                 />
 
-                <input
-                    type="text"
-                    name="website"
-                    value={contact.website}
-                    onChange={e =>
-                        setContact({
-                          ...contact,
-                          website: e.target.value
-                        })
-                    }
-                    tabIndex="-1"
-                    autoComplete="off"
-                    aria-hidden="true"
-                    style={{
-                      position: 'absolute',
-                      left: '-10000px',
-                      width: '1px',
-                      height: '1px',
-                      overflow: 'hidden'
-                    }}
-                />
-
                 <button
                     className="btn primary submit"
                     type="submit"
-                    disabled={sending}
                 >
 
                   <Send size={18} />
 
-                  {sending ? 'Enviando...' : 'Enviar mensagem'}
+                  Enviar mensagem
 
                 </button>
 
@@ -977,21 +728,6 @@ Open to Work ✓`}
 
         </footer>
 
-      </div>
-  )
-}
-
-function ArchitectureNode({
-                            eyebrow,
-                            title,
-                            text,
-                            accent = false
-                          }) {
-  return (
-      <div className={`architecture-node ${accent ? 'architecture-node-accent' : ''}`}>
-        <span>{eyebrow}</span>
-        <strong>{title}</strong>
-        <p>{text}</p>
       </div>
   )
 }

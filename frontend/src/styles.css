@@ -931,4 +931,97 @@ footer {
   .architecture-node {
     padding: 16px;
   }
+  .project-cover {
+    position: relative;
+    height: 190px;
+    margin: -20px -20px 16px -20px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+    background:
+            linear-gradient(135deg, rgba(122, 156, 255, 0.22), rgba(89, 221, 182, 0.16)),
+            #0b1622;
+  }
+
+  .project-cover-1 {
+    background:
+            linear-gradient(135deg, rgba(64, 130, 255, 0.30), rgba(89, 221, 182, 0.18)),
+            #0b1622;
+  }
+
+  .project-cover-2 {
+    background:
+            linear-gradient(135deg, rgba(121, 95, 255, 0.28), rgba(122, 156, 255, 0.18)),
+            #0b1622;
+  }
+
+  .project-cover-3 {
+    background:
+            linear-gradient(135deg, rgba(255, 88, 88, 0.26), rgba(255, 181, 72, 0.18)),
+            #0b1622;
+  }
+
+  .project-cover-4 {
+    background:
+            linear-gradient(135deg, rgba(89, 221, 182, 0.24), rgba(64, 130, 255, 0.18)),
+            #0b1622;
+  }
+
+  .project-cover-5 {
+    background:
+            linear-gradient(135deg, rgba(255, 72, 186, 0.24), rgba(122, 156, 255, 0.18)),
+            #0b1622;
+  }
+
+  .project-cover-6 {
+    background:
+            linear-gradient(135deg, rgba(255, 181, 72, 0.24), rgba(89, 221, 182, 0.18)),
+            #0b1622;
+  }
+
+  .project-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .project-cover-overlay {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 18px 16px 14px;
+    background: linear-gradient(to top, rgba(7, 16, 24, 0.92), rgba(7, 16, 24, 0.08));
+  }
+
+  .project-cover-overlay small {
+    display: block;
+    color: #d5e3f4;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .project-cover-overlay strong {
+    display: block;
+    color: #fff;
+    font: 700 1.08rem 'Space Grotesk';
+  }
+
+  .project-cover-fallback .project-cover-overlay {
+    background: linear-gradient(to top, rgba(7, 16, 24, 0.95), rgba(7, 16, 24, 0.16));
+  }
+
+  .project-featured .project-cover {
+    border-bottom-color: rgba(89, 221, 182, 0.22);
+  }
+
+  @media (max-width: 560px) {
+    .project-cover {
+      height: 170px;
+    }
+
+    .project-cover-overlay strong {
+      font-size: 1rem;
+    }
+  }
 }
