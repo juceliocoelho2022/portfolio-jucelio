@@ -1,6 +1,7 @@
 package com.jucelio.portfolio.controller;
 
 import com.jucelio.portfolio.model.Project;
+import com.jucelio.portfolio.exception.ContactServiceUnavailableException;
 import com.jucelio.portfolio.exception.RateLimitExceededException;
 import com.jucelio.portfolio.service.ContactMailService;
 import com.jucelio.portfolio.service.ContactRateLimitService;
@@ -10,7 +11,6 @@ import com.jucelio.portfolio.service.ResumePdfService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.mail.MailSendException;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -227,7 +227,7 @@ class PortfolioControllerTest {
 
     @Test
     void shouldReturnServiceUnavailableWhenEmailFails() throws Exception {
-        doThrow(new MailSendException("SMTP indisponível"))
+        doThrow(new ContactServiceUnavailableException("Resend indisponível"))
                 .when(contactMailService)
                 .send(any());
 
