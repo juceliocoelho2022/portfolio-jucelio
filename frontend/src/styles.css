@@ -1025,3 +1025,129 @@ footer {
     }
   }
 }
+
+
+/* Portfolio observability showcase */
+.observability-status {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.live-status-card,
+.observability-card {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(15, 29, 44, 0.82);
+  padding: 20px;
+}
+
+.live-status-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.live-status-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: var(--green);
+  background: rgba(89, 221, 182, 0.10);
+  border: 1px solid rgba(89, 221, 182, 0.18);
+}
+
+.live-status-card small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 5px;
+}
+
+.live-status-card strong,
+.observability-card strong {
+  display: block;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.live-status-card span,
+.observability-card span {
+  display: block;
+  color: var(--muted);
+  margin-top: 5px;
+  line-height: 1.5;
+}
+
+.api-status {
+  font-size: 1.25rem;
+}
+
+.api-status-up {
+  color: var(--green);
+}
+
+.api-status-down {
+  color: #ff7b7b;
+}
+
+.api-status-checking {
+  color: #f1c75b;
+}
+
+.observability-card {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.observability-card > svg {
+  flex: 0 0 auto;
+  color: var(--blue);
+  margin-top: 2px;
+}
+
+.observability-flow {
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(7, 16, 24, 0.45);
+}
+
+.observability-flow span {
+  padding: 8px 11px;
+  border-radius: 999px;
+  background: rgba(122, 156, 255, 0.10);
+  border: 1px solid rgba(122, 156, 255, 0.18);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.observability-flow b {
+  color: var(--green);
+}
+
+.observability-actions {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (max-width: 760px) {
+  .observability-status {
+    grid-template-columns: 1fr;
+  }
+
+  .observability-flow {
+    justify-content: flex-start;
+  }
+}
