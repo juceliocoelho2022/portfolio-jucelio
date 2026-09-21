@@ -13,7 +13,8 @@ import {
   Activity,
   BellRing,
   Gauge,
-  ShieldCheck
+  ShieldCheck,
+  Download
 } from 'lucide-react'
 
 const API_URL =
@@ -220,6 +221,13 @@ function App() {
               </a>
 
               <a
+                  href="#curriculo"
+                  onClick={closeMenu}
+              >
+                Currículo
+              </a>
+
+              <a
                   href="#contato"
                   onClick={closeMenu}
               >
@@ -287,6 +295,16 @@ function App() {
                     href="#projetos"
                 >
                   Ver projetos
+                </a>
+
+                <a
+                    className="btn"
+                    href={`${API_URL}/resume`}
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                  <Download size={18} />
+                  Baixar currículo
                 </a>
 
                 <a
@@ -755,6 +773,40 @@ Open to Work ✓`}
 
             </div>
 
+          </section>
+
+          <section
+              className="section alt"
+              id="curriculo"
+          >
+            <div className="container resume-section">
+              <div className="section-title">
+                <span>06. CURRÍCULO</span>
+                <h2>
+                  Currículo profissional gerado pelo backend Java.
+                </h2>
+              </div>
+
+              <div className="resume-card">
+                <div>
+                  <strong>Jucelio Farias Coelho — Java Backend Developer</strong>
+                  <p>
+                    PDF gerado dinamicamente pela API Spring Boot com experiência,
+                    stack técnica, formação e projetos de portfólio.
+                  </p>
+                </div>
+
+                <a
+                    className="btn primary"
+                    href={`${API_URL}/resume`}
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                  <Download size={18} />
+                  Abrir currículo em PDF
+                </a>
+              </div>
+            </div>
           </section>
 
           <section
