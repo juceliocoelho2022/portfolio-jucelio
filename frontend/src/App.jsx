@@ -9,7 +9,11 @@ import {
   Cloud,
   Send,
   Menu,
-  X
+  X,
+  Activity,
+  BellRing,
+  Gauge,
+  ShieldCheck
 } from 'lucide-react'
 
 const API_URL =
@@ -32,8 +36,32 @@ function App() {
   })
   const [feedback, setFeedback] = useState('')
   const [menuOpen, setMenuOpen] = useState(false)
+  const [apiHealth, setApiHealth] = useState({
+    status: 'CHECKING',
+    checkedAt: null
+  })
 
   useEffect(() => {
+    fetch(`${API_URL}/health`)
+        .then(res => {
+          if (!res.ok) {
+            throw new Error('Health check indisponível')
+          }
+          return res.json()
+        })
+        .then(data => {
+          setApiHealth({
+            status: data.status || 'UP',
+            checkedAt: new Date().toLocaleTimeString('pt-BR')
+          })
+        })
+        .catch(() => {
+          setApiHealth({
+            status: 'DOWN',
+            checkedAt: new Date().toLocaleTimeString('pt-BR')
+          })
+        })
+
     fetch(`${API_URL}/projects`)
         .then(res => {
           if (!res.ok) {
@@ -175,6 +203,13 @@ function App() {
                   onClick={closeMenu}
               >
                 Projetos
+              </a>
+
+              <a
+                  href="#observabilidade"
+                  onClick={closeMenu}
+              >
+                Observabilidade
               </a>
 
               <a
@@ -545,6 +580,110 @@ Open to Work ✓`}
 
           <section
               className="section alt"
+              id="observabilidade"
+          >
+            <div className="container">
+              <div className="section-title">
+                <span>04. OBSERVABILIDADE</span>
+                <h2>
+                  Métricas, SLOs e alertas reais em produção.
+                </h2>
+              </div>
+
+              <div className="observability-status">
+                <div className="live-status-card">
+                  <div className="live-status-icon">
+                    <Activity size={24} />
+                  </div>
+
+                  <div>
+                    <small>STATUS DA API</small>
+                    <strong className={`api-status api-status-${apiHealth.status.toLowerCase()}`}>
+                      {apiHealth.status === 'UP'
+                          ? 'Online'
+                          : apiHealth.status === 'DOWN'
+                              ? 'Indisponível'
+                              : 'Verificando'}
+                    </strong>
+                    <span>
+                      {apiHealth.checkedAt
+                          ? `Última verificação: ${apiHealth.checkedAt}`
+                          : 'Executando health check...'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="observability-card">
+                  <Gauge size={22} />
+                  <div>
+                    <strong>Prometheus + Grafana</strong>
+                    <span>
+                      Métricas HTTP, JVM, HikariCP, p95 e indicadores de negócio.
+                    </span>
+                  </div>
+                </div>
+
+                <div className="observability-card">
+                  <BellRing size={22} />
+                  <div>
+                    <strong>Alertmanager + Slack</strong>
+                    <span>
+                      Alertas automáticos para indisponibilidade, 5xx, latência e integrações.
+                    </span>
+                  </div>
+                </div>
+
+                <div className="observability-card">
+                  <ShieldCheck size={22} />
+                  <div>
+                    <strong>SLOs operacionais</strong>
+                    <span>
+                      Disponibilidade, taxa de erro, latência p95 e saúde do pool de conexões.
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="observability-flow" aria-label="Fluxo de observabilidade">
+                <span>Spring Boot</span>
+                <b>→</b>
+                <span>Actuator</span>
+                <b>→</b>
+                <span>Prometheus</span>
+                <b>→</b>
+                <span>Grafana</span>
+                <b>→</b>
+                <span>Alertmanager</span>
+                <b>→</b>
+                <span>Slack</span>
+              </div>
+
+              <div className="observability-actions">
+                <a
+                    className="btn"
+                    href="https://portfolio-jucelio-api.onrender.com/swagger-ui/index.html"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                  <ExternalLink size={17} />
+                  Swagger da API
+                </a>
+
+                <a
+                    className="btn"
+                    href="https://github.com/juceliocoelho2022/portfolio-jucelio"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                  <Github size={17} />
+                  Ver observabilidade no GitHub
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <section
+              className="section"
               id="formacao"
           >
 
@@ -553,7 +692,7 @@ Open to Work ✓`}
               <div className="section-title">
 
               <span>
-                04. FORMAÇÃO
+                05. FORMAÇÃO
               </span>
 
                 <h2>
