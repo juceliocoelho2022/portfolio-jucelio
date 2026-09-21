@@ -485,6 +485,48 @@ portfolio_resume_downloads_total
 
 Essas métricas permitem acompanhar contatos processados, bloqueios por rate limiting e downloads do currículo diretamente pelo Prometheus/Grafana.
 
+### Dashboard Grafana
+
+O repositório inclui uma stack local de observabilidade com **Prometheus + Grafana** pronta para consumir as métricas da API publicada no Render.
+
+```bash
+docker compose -f docker-compose.observability.yml up -d
+```
+
+Depois acesse:
+
+```text
+Prometheus: http://localhost:9090
+Grafana:    http://localhost:3000
+```
+
+Credenciais locais padrão do Grafana:
+
+```text
+usuário: admin
+senha:   admin
+```
+
+O datasource Prometheus e o dashboard são provisionados automaticamente. O dashboard **Portfolio Java Backend — Observabilidade** acompanha:
+
+- contatos enviados;
+- bloqueios por rate limiting;
+- downloads do currículo;
+- taxa e latência HTTP;
+- latência da integração com Resend;
+- heap da JVM;
+- conexões HikariCP;
+- uso de CPU do processo.
+
+Arquivos principais:
+
+```text
+docker-compose.observability.yml
+observability/prometheus/prometheus.yml
+observability/grafana/provisioning/
+observability/grafana/dashboards/portfolio-overview.json
+```
+
 ---
 
 ## Próximas evoluções
