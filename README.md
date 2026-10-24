@@ -152,12 +152,15 @@ Variáveis de ambiente
 
 | Projeto | Foco | Tecnologias |
 |---|---|---|
+| **[CX Intelligence v1.2](https://cx-intelligence-demo.onrender.com/)** | Customer Experience Analytics, ETL, KPIs e NLP experimental; [repositório](https://github.com/juceliocoelho2022/cx-intelligence) | Python, pandas, PostgreSQL local, Streamlit, scikit-learn, Pytest |
 | **NexaPay** | Pagamentos event-driven | Java 21, Spring Boot, Kafka, PostgreSQL, Redis |
 | **InnovationHub** | Gestão corporativa de PD&I | Java 21, Spring Boot, JPA, Flyway, OpenAPI |
 | **SentinelFraud Platform** | Prevenção a fraudes | Spring Boot, Kafka, Redis, PostgreSQL |
 | **TenantGuard Cloud** | SaaS multi-tenant | Spring Boot, PostgreSQL, RLS, JWT |
 | **FraudShield AI** | IA aplicada a fraude | Spring Boot, FastAPI, Python, PostgreSQL |
 | **RotaCerta** | Aplicativo mobile | Kotlin, Jetpack Compose, Android |
+
+O **CX Intelligence** possui um card fixo de destaque no frontend React, com link para a demonstração pública e o código. Diferentemente dos demais projetos, esse card não depende de uma nova entrada na API Java de projetos. A demo pública utiliza somente **4.000 tickets sintéticos**; a carga de **8.469 tickets do Kaggle** foi validada localmente e não está hospedada no Render.
 
 Os cards no portfólio possuem links diretos para os repositórios correspondentes.
 
