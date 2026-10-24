@@ -495,7 +495,7 @@ Open to Work ✓`}
             </span>
 
               <h2>
-                Projetos carregados pela API Java.
+                Projetos e cases com demonstração prática.
               </h2>
 
             </div>
@@ -509,6 +509,61 @@ Open to Work ✓`}
             )}
 
             <div className="projects">
+
+              <article className="project project-featured project-cx">
+                <div className="project-cover project-cover-cx">
+                  <div className="project-cover-overlay">
+                    <small>Data Analytics • Customer Experience</small>
+                    <strong>CX Intelligence v1.2.0</strong>
+                  </div>
+                </div>
+
+                <div className="project-top">
+                  <div className="project-meta">
+                    <span>DATA ENGINEERING + CX ANALYTICS</span>
+                    <strong className="featured-badge">Demo online</strong>
+                  </div>
+                  <a href="https://cx-intelligence-demo.onrender.com/"
+                     target="_blank" rel="noopener noreferrer"
+                     aria-label="Abrir demonstração pública do CX Intelligence">
+                    <ExternalLink size={18} />
+                  </a>
+                </div>
+
+                <h3>CX Intelligence — Customer Experience Analytics</h3>
+                <p>
+                  Plataforma de análise de atendimento com ETL idempotente,
+                  indicadores CSAT, histórico imutável de eventos, análises de
+                  segmentos, alertas heurísticos e relatórios executivos.
+                  A demo pública utiliza 4.000 tickets sintéticos; a integração
+                  Kaggle com PostgreSQL é executada separadamente no ambiente local.
+                </p>
+                <div className="highlight-list">
+                  <small>✓ GitHub Release v1.2.0</small>
+                  <small>✓ 74 testes no CI com PostgreSQL</small>
+                  <small>✓ Pipeline Kaggle isolado</small>
+                  <small>✓ Deploy público com dados sintéticos</small>
+                </div>
+                <div className="tech-list">
+                  {['Python', 'pandas', 'PostgreSQL', 'Streamlit', 'scikit-learn', 'Pytest', 'GitHub Actions'].map(tech => (
+                    <span key={tech}>{tech}</span>
+                  ))}
+                </div>
+                <div className="project-actions cx-project-actions">
+                  <a className="project-link"
+                     href="https://cx-intelligence-demo.onrender.com/"
+                     target="_blank" rel="noopener noreferrer">
+                    <ExternalLink size={16} />
+                    Abrir demo
+                  </a>
+                  <a className="project-link"
+                     href="https://github.com/juceliocoelho2022/cx-intelligence"
+                     target="_blank" rel="noopener noreferrer">
+                    <Github size={16} />
+                    Ver código
+                  </a>
+                </div>
+              </article>
 
               {projects.map(project => (
 
