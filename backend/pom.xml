@@ -18,6 +18,8 @@
 
   <properties>
     <java.version>21</java.version>
+    <!-- Fixes Docker 29 minimum API compatibility (Testcontainers 1.21.3 used 1.32). -->
+    <testcontainers.version>1.21.4</testcontainers.version>
   </properties>
 
   <dependencies>
